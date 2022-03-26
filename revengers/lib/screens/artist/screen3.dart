@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:revengers/widgets/appBar.dart';
+import 'package:revengers/widgets/upload_function.dart';
+// import 'dart:html';
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Screen3 extends StatefulWidget {
   const Screen3({Key? key}) : super(key: key);
@@ -12,6 +19,81 @@ class _Screen3State extends State<Screen3> {
   TextEditingController fileUploaded = TextEditingController();
   TextEditingController bgImage = TextEditingController();
   TextEditingController songName = TextEditingController();
+  FilePickerResult? image, song;
+  String? imagepath, songpath;
+  Reference? ref;
+  var image_down_url, song_down_url;
+  final firestoreinstance = FirebaseFirestore.instance;
+
+  void selectimage() async {
+    image = await FilePicker.platform.pickFiles();
+
+    setState(() {
+      image = image;
+      imagepath = basename(image!.paths.toString());
+      uploadimagefile(image?.files.first.bytes, imagepath!);
+    });
+  }
+
+  void uploadimagefile(Uint8List? image, String imagepath) async {
+    ref = FirebaseStorage.instance.ref().child(imagepath);
+    UploadTask uploadTask = ref!.putData(image!);
+
+    image_down_url =
+        await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
+  }
+
+  void selectsong() async {
+    song = await FilePicker.platform.pickFiles();
+
+    setState(() {
+      song = song;
+      songpath = basename(song!.paths.toString());
+      uploadsongfile(song!.files.first.bytes, songpath!);
+    });
+  }
+
+  void uploadsongfile(Uint8List? song, String songpath) async {
+    ref = FirebaseStorage.instance.ref().child(songpath);
+    UploadTask uploadTask = ref!.putData(song!);
+
+    song_down_url =
+        await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
+  }
+
+  finalupload(context) {
+    if (songName.text != '' &&
+        song_down_url != null &&
+        image_down_url != null) {
+      print(songName.text);
+      print(song_down_url);
+      print(image_down_url.toString());
+
+      var data = {'details': {}};
+
+      firestoreinstance.collection("songs").doc('tIH7UbUSFBNWBy2uhXQh').update({
+        'songs_created_name': FieldValue.arrayUnion([songName]),
+        'songs_created_url': FieldValue.arrayUnion([song_down_url]),
+        'songs_owned_url': FieldValue.arrayUnion([song_down_url]),
+        'songs_owned_name': FieldValue.arrayUnion([songName]),
+      }).whenComplete(() => showDialog(
+            context: context,
+            builder: (context) =>
+                _onTapButton(context, "Files Uploaded Successfully :)"),
+          ));
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) =>
+            _onTapButton(context, "Please Enter All Details :("),
+      );
+    }
+  }
+
+  _onTapButton(BuildContext context, data) {
+    return AlertDialog(title: Text(data));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +160,8 @@ class _Screen3State extends State<Screen3> {
                       onPressed: () {
                         setState(() {
                           if (songName.text != "") {
-                            fileUploaded.text = "Gabba gabba gabba";
+                            selectsong();
+                            fileUploaded.text = songpath!;
                           } else {
                             Scaffold.of(context).showSnackBar(
                               SnackBar(
@@ -128,7 +211,38 @@ class _Screen3State extends State<Screen3> {
                       icon: Icon(Icons.upload),
                       onPressed: () {
                         setState(() {
-                          bgImage.text = "Gabba gabba gabba";
+                          selectimage();
+                          bgImage.text = imagepath!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: ElevatedButton.icon(
+                      label: Text('Create NFT', style: TextStyle(fontSize: 15)),
+                      icon: Icon(Icons.upload),
+                      onPressed: () {
+                        setState(() {
+                          firestoreinstance
+                              .collection("songs")
+                              .doc('tIH7UbUSFBNWBy2uhXQh')
+                              .update({
+                            'songs_created_name':
+                                FieldValue.arrayUnion([songName]),
+                            'songs_created_url':
+                                FieldValue.arrayUnion([song_down_url]),
+                            'songs_owned_url':
+                                FieldValue.arrayUnion([song_down_url]),
+                            'songs_owned_name':
+                                FieldValue.arrayUnion([songName]),
+                          }).whenComplete(() => showDialog(
+                                    context: context,
+                                    builder: (context) => _onTapButton(context,
+                                        "Files Uploaded Successfully :)"),
+                                  ));
                         });
                       },
                     ),

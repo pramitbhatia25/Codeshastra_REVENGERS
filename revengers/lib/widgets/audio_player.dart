@@ -226,7 +226,8 @@ class _PlayerNewState extends State<PlayerNew> {
                                       musicLength.inSeconds - 1) {
                                     print("idk");
                                   } else {
-                                    cache?.play("opening.mp3");
+                                    cache?.play(
+                                        "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/24k%20magic.mp3?alt=media&token=74b43e51-af7b-4fc6-9005-a9bcedf758ea");
                                     setState(() {
                                       playBtn = Icons.pause;
                                       playing = true;
