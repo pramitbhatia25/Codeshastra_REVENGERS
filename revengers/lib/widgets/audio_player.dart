@@ -2,35 +2,22 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class PlayerNew extends StatefulWidget {
+  const PlayerNew({Key? key}) : super(key: key);
+  static const String routename = "/audio_player";
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MusicApp(),
-    );
-  }
+  State<PlayerNew> createState() => _PlayerNewState();
 }
 
-class MusicApp extends StatefulWidget {
-  @override
-  _MusicAppState createState() => _MusicAppState();
-}
-
-class _MusicAppState extends State<MusicApp> {
-  //we will need some variables
+class _PlayerNewState extends State<PlayerNew> {
   bool playing = false; // at the begining we are not playing any song
   IconData playBtn = Icons.play_arrow; // the main state of the play button icon
 
   //Now let's start by creating our music player
   //first let's declare some object
-  late AudioPlayer _player;
-  late AudioCache cache;
+  AudioPlayer? _player;
+  AudioCache? cache;
 
   Duration position = new Duration();
   Duration musicLength = new Duration();
@@ -54,7 +41,7 @@ class _MusicAppState extends State<MusicApp> {
   //let's create the seek function that will allow us to go to a certain position of the music
   void seekToSec(int sec) {
     Duration newPos = Duration(seconds: sec);
-    _player.seek(newPos);
+    _player?.seek(newPos);
   }
 
   //Now let's initialize our player
@@ -65,17 +52,17 @@ class _MusicAppState extends State<MusicApp> {
     _player = AudioPlayer();
     cache = AudioCache(fixedPlayer: _player);
 
-    //now let's handle the audioplayer time
+    //now let's handle the PlayerNew time
 
     //this function will allow you to get the music duration
-    _player.durationHandler = (d) {
+    _player?.durationHandler = (d) {
       setState(() {
         musicLength = d;
       });
     };
 
     //this function will allow us to move the cursor of the slider while we are playing the song
-    _player.positionHandler = (p) {
+    _player?.positionHandler = (p) {
       setState(() {
         position = p;
       });
@@ -218,13 +205,13 @@ class _MusicAppState extends State<MusicApp> {
                                 //here we will add the functionality of the play button
                                 if (!playing) {
                                   //now let's play the song
-                                  cache.play("opening.mp3");
+                                  cache?.play("opening.mp3");
                                   setState(() {
                                     playBtn = Icons.pause;
                                     playing = true;
                                   });
                                 } else {
-                                  _player.pause();
+                                  _player?.pause();
                                   setState(() {
                                     playBtn = Icons.play_arrow;
                                     playing = false;

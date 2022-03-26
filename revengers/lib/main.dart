@@ -7,6 +7,8 @@ import 'package:revengers/screens/user/user_login.dart';
 import 'package:revengers/screens/user/user_register.dart';
 import 'package:revengers/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:revengers/widgets/audio_player.dart';
+import 'widgets/audio_player.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       home: WelcomeScreen(),
       routes: {
+        PlayerNew.routename: (context) => PlayerNew(),
         User_Login.routeName: (ctx) => User_Login(),
         User_Register.routeName: (ctx) => User_Register(),
         User_Home.routeName: (ctx) => User_Home(),
