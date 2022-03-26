@@ -8,7 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:revengers/widgets/appBar.dart';
 
 class User_Home extends StatefulWidget {
-  const User_Home({Key? key}) : super(key: key);
+  String title = "Default";
+  String logo_url = "Default";
+  String song_url = "Default";
+  String artist_email = "Default";
+  String owned_email = "Default";
+
+  User_Home({
+    required this.title,
+    required this.logo_url,
+    required this.song_url,
+    required this.artist_email,
+    required this.owned_email,
+  });
   static const routeName = '/user_home';
   @override
   State<User_Home> createState() => _User_HomeState();
@@ -74,13 +86,6 @@ class _User_HomeState extends State<User_Home> {
           items: [
             BottomNavyBarItem(
               icon: Icon(
-                Icons.play_arrow,
-                color: Colors.blue,
-              ),
-              title: Text('Playing'),
-            ),
-            BottomNavyBarItem(
-              icon: Icon(
                 Icons.home,
                 color: Colors.orange,
               ),
@@ -88,6 +93,13 @@ class _User_HomeState extends State<User_Home> {
                 'Home',
                 style: TextStyle(color: Colors.orange),
               ),
+            ),
+            BottomNavyBarItem(
+              icon: Icon(
+                Icons.play_arrow,
+                color: Colors.blue,
+              ),
+              title: Text('Playing'),
             ),
             BottomNavyBarItem(
                 icon: Icon(
@@ -120,6 +132,7 @@ class _User_HomeState extends State<User_Home> {
               });
             },
             children: [
+              Screen2(),
               Scaffold(
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
@@ -153,7 +166,7 @@ class _User_HomeState extends State<User_Home> {
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
                             child: Text(
-                              "Music Beats",
+                              widget.owned_email,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 38.0,
@@ -164,7 +177,7 @@ class _User_HomeState extends State<User_Home> {
                           Padding(
                             padding: EdgeInsets.only(left: 12.0),
                             child: Text(
-                              "Listen to your favorite Music",
+                              widget.artist_email,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
@@ -193,7 +206,7 @@ class _User_HomeState extends State<User_Home> {
                           ),
                           Center(
                             child: Text(
-                              "Stargazer",
+                              widget.title,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 32.0,
@@ -268,8 +281,7 @@ class _User_HomeState extends State<User_Home> {
                                             //now let's play the song
                                             // _player?.setUrl(
                                             // "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/love%20yourself.mp3?alt=media&token=ccb41994-7a4b-4fb7-a7ac-353a00f33212");
-                                            _player?.play(
-                                                "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/uptown%20funk.mp3?alt=media&token=b7de9b98-194c-4838-a184-ada0ad8b0847");
+                                            _player?.play(widget.song_url);
                                             // cache?.play("opening.mp3");
                                             setState(() {
                                               playBtn = Icons.pause;
@@ -307,7 +319,6 @@ class _User_HomeState extends State<User_Home> {
                   ),
                 ),
               ),
-              Screen2(),
               Screen3(),
               Screen4(),
             ],
