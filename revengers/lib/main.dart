@@ -41,7 +41,12 @@ class MyApp extends StatelessWidget {
             song_url: ""),
         Artist_Login.routeName: (ctx) => Artist_Login(),
         Artist_Register.routeName: (ctx) => Artist_Register(),
-        Artist_Home.routeName: (ctx) => Artist_Home(),
+        Artist_Home.routeName: (ctx) => Artist_Home(
+            title: "",
+            artist_email: "",
+            logo_url: "",
+            owned_email: "",
+            song_url: ""),
       },
     );
   }

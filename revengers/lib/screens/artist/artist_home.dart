@@ -6,7 +6,19 @@ import 'package:revengers/screens/artist/screen3.dart';
 import 'package:revengers/screens/artist/screen4.dart';
 
 class Artist_Home extends StatefulWidget {
-  const Artist_Home({Key? key}) : super(key: key);
+  String title = "Default";
+  String logo_url = "Default";
+  String song_url = "Default";
+  String artist_email = "Default";
+  String owned_email = "Default";
+
+  Artist_Home({
+    required this.title,
+    required this.logo_url,
+    required this.song_url,
+    required this.artist_email,
+    required this.owned_email,
+  });
   static const routeName = '/artist_home';
   @override
   State<Artist_Home> createState() => _Artist_HomeState();
@@ -72,13 +84,6 @@ class _Artist_HomeState extends State<Artist_Home> {
           items: [
             BottomNavyBarItem(
               icon: Icon(
-                Icons.play_arrow,
-                color: Colors.blue,
-              ),
-              title: Text('Playing'),
-            ),
-            BottomNavyBarItem(
-              icon: Icon(
                 Icons.home,
                 color: Colors.orange,
               ),
@@ -86,6 +91,13 @@ class _Artist_HomeState extends State<Artist_Home> {
                 'Home',
                 style: TextStyle(color: Colors.orange),
               ),
+            ),
+            BottomNavyBarItem(
+              icon: Icon(
+                Icons.play_arrow,
+                color: Colors.blue,
+              ),
+              title: Text('Playing'),
             ),
             BottomNavyBarItem(
                 icon: Icon(
@@ -118,8 +130,9 @@ class _Artist_HomeState extends State<Artist_Home> {
               });
             },
             children: [
+              Screen2(),
               Scaffold(
-                resizeToAvoidBottomInset: true,
+                resizeToAvoidBottomInset: false,
                 appBar: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.lightBlue,
@@ -139,33 +152,38 @@ class _Artist_HomeState extends State<Artist_Home> {
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: 10.0,
+                      top: 0.0,
                     ),
                     child: Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(height: 10),
                           //Let's add some text title
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text(
-                              "Music Beats",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 38.0,
-                                fontWeight: FontWeight.bold,
+                            child: Center(
+                              child: Text(
+                                "NFT Owned By: ${widget.artist_email}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 12.0),
-                            child: Text(
-                              "Listen to your favorite Music",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w400,
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 12.0, top: 5),
+                              child: Text(
+                                "NFT Artist: ${widget.artist_email}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -175,12 +193,12 @@ class _Artist_HomeState extends State<Artist_Home> {
                           //Let's add the music cover
                           Center(
                             child: Container(
-                              width: 280.0,
-                              height: 280.0,
+                              width: 200.0,
+                              height: 200.0,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30.0),
                                   image: DecorationImage(
-                                    image: AssetImage("assets/image.png"),
+                                    image: NetworkImage(widget.logo_url),
                                   )),
                             ),
                           ),
@@ -190,7 +208,7 @@ class _Artist_HomeState extends State<Artist_Home> {
                           ),
                           Center(
                             child: Text(
-                              "Stargazer",
+                              widget.title,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 32.0,
@@ -249,14 +267,6 @@ class _Artist_HomeState extends State<Artist_Home> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       IconButton(
-                                        iconSize: 45.0,
-                                        color: Colors.blue,
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.skip_previous,
-                                        ),
-                                      ),
-                                      IconButton(
                                         iconSize: 62.0,
                                         color: Colors.blue[800],
                                         onPressed: () {
@@ -265,8 +275,7 @@ class _Artist_HomeState extends State<Artist_Home> {
                                             //now let's play the song
                                             // _player?.setUrl(
                                             // "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/love%20yourself.mp3?alt=media&token=ccb41994-7a4b-4fb7-a7ac-353a00f33212");
-                                            _player?.play(
-                                                "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/uptown%20funk.mp3?alt=media&token=b7de9b98-194c-4838-a184-ada0ad8b0847");
+                                            _player?.play(widget.song_url);
                                             // cache?.play("opening.mp3");
                                             setState(() {
                                               playBtn = Icons.pause;
@@ -284,14 +293,6 @@ class _Artist_HomeState extends State<Artist_Home> {
                                           playBtn,
                                         ),
                                       ),
-                                      IconButton(
-                                        iconSize: 45.0,
-                                        color: Colors.blue,
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.skip_next,
-                                        ),
-                                      ),
                                     ],
                                   )
                                 ],
@@ -304,7 +305,6 @@ class _Artist_HomeState extends State<Artist_Home> {
                   ),
                 ),
               ),
-              Screen2(),
               Screen3(),
               Screen4(),
             ],
