@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:revengers/widgets/appBar.dart';
+
+import '../../widgets/song.dart';
 
 class Screen2 extends StatefulWidget {
   const Screen2({Key? key}) : super(key: key);
@@ -9,7 +13,34 @@ class Screen2 extends StatefulWidget {
 }
 
 class _Screen2State extends State<Screen2> {
-  List<String> songs = ["Uptown Funk", "Shakira"];
+  List<Song> songs = [];
+  final _cloudfirestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fetch();
+    super.initState();
+  }
+
+  Future<void> fetch() async {
+    await for (var snapshot
+        in _cloudfirestore.collection('songs').snapshots()) {
+      for (var message in snapshot.docs) {
+        songs.add(Song(
+          email: message.data()['email'].toString(),
+          owner: message.data()['owner'].toString(),
+          song_name: message.data()['song_name'].toString(),
+          song_url: message.data()['song_url'].toString(),
+        ));
+
+        setState(() {
+          songs = songs;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +100,7 @@ class _Screen2State extends State<Screen2> {
                                   Border.all(color: Colors.black, width: 1.0),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Center(child: Text("Song")));
+                            child: Center(child: Text(pd.song_name)));
                       }).toList(),
                     ),
                   ),
