@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "201241666051",
+    "project_id": "revengers-88a84",
+    "storage_bucket": "revengers-88a84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201241666051:android:fc324b8052d9c449bae436",
+        "android_client_info": {
+          "package_name": "com.codeshastra.revengers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201241666051-8j22fq5o0noii4bj35960l6hkacljtem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdTHblh4sLAf00JA2qtezBm0GPCNwuc6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201241666051-8j22fq5o0noii4bj35960l6hkacljtem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
