@@ -17,14 +17,14 @@ class _BottomnavbarState extends State<Bottomnavbar> {
         items: [
           BottomNavBarItem(
             icon: Icon(Icons.home),
-            title: 'Home',
+            title: 'My Profile',
             activeColor: Colors.orange,
             inactiveColor: Colors.white,
             activeBackgroundColor: Colors.white,
           ),
           BottomNavBarItem(
             icon: Icon(Icons.person),
-            title: 'My Profile',
+            title: 'Home',
             activeColor: Colors.orange,
             inactiveColor: Colors.white,
             activeBackgroundColor: Colors.white,

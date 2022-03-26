@@ -19,20 +19,23 @@ class _PlayerNewState extends State<PlayerNew> {
   AudioCache? cache;
 
   Duration position = new Duration();
-  Duration musicLength = new Duration();
+  Duration musicLength = new Duration(seconds: 100);
 
   //we will create a custom slider
 
   Widget slider() {
     return Container(
-      width: 300.0,
+      width: 280.0,
       child: Slider.adaptive(
           activeColor: Colors.blue[800],
           inactiveColor: Colors.grey[350],
           value: position.inSeconds.toDouble(),
-          max: musicLength.inSeconds.toDouble(),
+          max: musicLength.inSeconds.toDouble() + 1,
           onChanged: (value) {
-            seekToSec(value.toInt());
+            if (value > musicLength.inSeconds) {}
+            setState(() {
+              seekToSec(value.toInt());
+            });
           }),
     );
   }
@@ -50,6 +53,19 @@ class _PlayerNewState extends State<PlayerNew> {
     super.initState();
     _player = AudioPlayer();
     cache = AudioCache(fixedPlayer: _player);
+
+    _player?.onAudioPositionChanged.listen((Duration p) => {
+          if (p.inSeconds == musicLength.inSeconds - 10)
+            {
+              _player?.pause(),
+              setState(() {
+                playBtn = Icons.play_arrow;
+                playing = false;
+              }),
+            }
+          else
+            {print('Current position: $p'), setState(() => position = p)},
+        });
 
     //now let's handle the PlayerNew time
 
@@ -70,6 +86,7 @@ class _PlayerNewState extends State<PlayerNew> {
 
   @override
   Widget build(BuildContext context) {
+    print(musicLength);
     return Scaffold(
       //let's start by creating the main UI of the app
       body: Container(
@@ -176,10 +193,12 @@ class _PlayerNewState extends State<PlayerNew> {
                                 ),
                               ),
                               slider(),
-                              Text(
-                                "${musicLength.inMinutes}:${musicLength.inSeconds.remainder(60)}",
-                                style: TextStyle(
-                                  fontSize: 18.0,
+                              Flexible(
+                                child: Text(
+                                  "${musicLength.inMinutes}:${musicLength.inSeconds.remainder(60)}",
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                  ),
                                 ),
                               ),
                             ],
@@ -203,12 +222,18 @@ class _PlayerNewState extends State<PlayerNew> {
                               onPressed: () {
                                 //here we will add the functionality of the play button
                                 if (!playing) {
+                                  if (position.inSeconds <
+                                      musicLength.inSeconds - 1) {
+                                    print("idk");
+                                  } else {
+                                    cache?.play("opening.mp3");
+                                    setState(() {
+                                      playBtn = Icons.pause;
+                                      playing = true;
+                                    });
+                                  }
                                   //now let's play the song
-                                  cache?.play("opening.mp3");
-                                  setState(() {
-                                    playBtn = Icons.pause;
-                                    playing = true;
-                                  });
+
                                 } else {
                                   _player?.pause();
                                   setState(() {
