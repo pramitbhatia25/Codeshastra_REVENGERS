@@ -39,7 +39,7 @@ class _Artist_HomeState extends State<Artist_Home> {
                 Icons.money,
                 color: Colors.orange,
               ),
-              title: Text('Wallet')),
+              title: Text('My Revenue')),
         ],
         selectedIndex: _currentIndex,
         onItemSelected: (index) {
