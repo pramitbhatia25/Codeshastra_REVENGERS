@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/user/user_home.dart';
 
+import '../../widgets/appBar.dart';
+
 class User_Login extends StatefulWidget {
   static const routeName = '/user_login';
 
@@ -17,7 +19,7 @@ class _User_LoginState extends State<User_Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.red[400],
-      appBar: AppBar(title: Text("revengers")),
+      appBar: myAppBar(title: "User Login."),
       body: SafeArea(
         child: Column(
           children: <Widget>[
