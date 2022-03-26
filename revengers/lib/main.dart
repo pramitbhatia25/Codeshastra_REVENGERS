@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/login_screen.dart';
-import 'package:revengers/screens/registration_screen.dart';
 import 'package:revengers/screens/welcome_screen.dart';
-
-import 'screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,11 +18,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
       ),
       home: WelcomeScreen(),
-      routes: {
-        LoginScreen.routeName: (ctx) => LoginScreen(),
-        RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
-        Home.routeName: (ctx) => Home(),
-      },
     );
   }
 }
