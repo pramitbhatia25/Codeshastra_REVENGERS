@@ -36,8 +36,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Column(
             children: [
               SizedBox(height: 150),
-<<<<<<< HEAD
-=======
               const Text('Revengers',
                   style: TextStyle(
                     color: Colors.black,
@@ -50,7 +48,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               //   child: Lottie.asset('../assets/lottie/continuePage.json',
               //       height: 150),
               // ),
->>>>>>> 5d91c474a49f062f30935ab1bc8b60cd0bd886e4
               SizedBox(height: 150), //lottie
               Expanded(
                 child: Container(
