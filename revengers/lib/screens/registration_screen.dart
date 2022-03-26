@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flash_chat/roundbutton.dart';
-import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'chat_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import 'home.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'register';
+  static const routeName = '/register';
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -14,8 +14,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
   bool isSpinning = false;
-  String email;
-  String password;
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +45,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -58,26 +56,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter Password'),
               ),
               SizedBox(
                 height: 24.0,
               ),
-              RoundButton(
-                text: 'Register',
-                color: Colors.blueAccent,
+              ElevatedButton(
+                child: Text('Register'),
                 onPressed: () async {
                   setState(() {
                     isSpinning = true;
                   });
                   try {
                     final NewUser = await _auth.createUserWithEmailAndPassword(
-                      email: email,
-                      password: password,
+                      email: email!,
+                      password: password!,
                     );
                     if (NewUser != null) {
-                      Navigator.pushNamed(context, ChatScreen.id);
+                      Navigator.of(context).pushNamed(Home.routeName);
                     }
                     setState(() {
                       isSpinning = false;
