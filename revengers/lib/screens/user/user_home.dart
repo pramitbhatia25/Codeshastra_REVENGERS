@@ -29,6 +29,13 @@ class _User_HomeState extends State<User_Home> {
             title: Text('Home'),
           ),
           BottomNavyBarItem(
+            icon: Icon(
+              Icons.play_arrow,
+              color: Colors.orange,
+            ),
+            title: Text('Playing'),
+          ),
+          BottomNavyBarItem(
               icon: Icon(
                 Icons.search,
                 color: Colors.orange,
