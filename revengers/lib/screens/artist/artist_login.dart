@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/artist/artist_home.dart';
 
+import '../../widgets/appBar.dart';
+
 class Artist_Login extends StatefulWidget {
   static const routeName = '/artist_login';
   @override
@@ -16,7 +18,7 @@ class _Artist_LoginState extends State<Artist_Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.red[400],
-      appBar: AppBar(title: Text("revengers")),
+      appBar: myAppBar(title: "Artist Login."),
       body: SafeArea(
         child: Column(
           children: <Widget>[
