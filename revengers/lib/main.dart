@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       home: WelcomeScreen(),
       routes: {
-        PlayerNew.routename: (context) => PlayerNew(),
+        // PlayerNew.routename: (context) => PlayerNew(),
         User_Login.routeName: (ctx) => User_Login(),
         User_Register.routeName: (ctx) => User_Register(),
         User_Home.routeName: (ctx) => User_Home(),
