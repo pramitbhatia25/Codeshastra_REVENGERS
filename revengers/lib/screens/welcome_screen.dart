@@ -14,21 +14,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.red[400],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RoundButton(
-              color: Colors.blueAccent,
-              text: 'Enter as User',
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+              ),
+              child:
+                  Text('Enter as User', style: TextStyle(color: Colors.black)),
               onPressed: () {
                 Navigator.of(context).pushNamed(User_Login.routeName);
               },
             ),
-            RoundButton(
-              color: Colors.blueAccent,
-              text: 'Enter as Artist',
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // background
+              ),
+              child: Text('Enter as Artist',
+                  style: TextStyle(color: Colors.black)),
               onPressed: () {
                 Navigator.of(context).pushNamed(Artist_Login.routeName);
               },
