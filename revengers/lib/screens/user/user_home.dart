@@ -165,23 +165,27 @@ class _User_HomeState extends State<User_Home> {
                           //Let's add some text title
                           Padding(
                             padding: const EdgeInsets.only(left: 12.0),
-                            child: Text(
-                              widget.owned_email,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 38.0,
-                                fontWeight: FontWeight.bold,
+                            child: Center(
+                              child: Text(
+                                "NFT Owned By: ${widget.artist_email}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 12.0),
-                            child: Text(
-                              widget.artist_email,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w400,
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 12.0, top: 5),
+                              child: Text(
+                                "NFT Artist: ${widget.artist_email}",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -191,12 +195,12 @@ class _User_HomeState extends State<User_Home> {
                           //Let's add the music cover
                           Center(
                             child: Container(
-                              width: 280.0,
-                              height: 280.0,
+                              width: 200.0,
+                              height: 200.0,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30.0),
                                   image: DecorationImage(
-                                    image: AssetImage("assets/image.png"),
+                                    image: NetworkImage(widget.logo_url),
                                   )),
                             ),
                           ),
@@ -265,14 +269,6 @@ class _User_HomeState extends State<User_Home> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       IconButton(
-                                        iconSize: 45.0,
-                                        color: Colors.blue,
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.skip_previous,
-                                        ),
-                                      ),
-                                      IconButton(
                                         iconSize: 62.0,
                                         color: Colors.blue[800],
                                         onPressed: () {
@@ -297,14 +293,6 @@ class _User_HomeState extends State<User_Home> {
                                         },
                                         icon: Icon(
                                           playBtn,
-                                        ),
-                                      ),
-                                      IconButton(
-                                        iconSize: 45.0,
-                                        color: Colors.blue,
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.skip_next,
                                         ),
                                       ),
                                     ],

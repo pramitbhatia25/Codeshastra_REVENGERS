@@ -44,6 +44,7 @@ class _Screen2State extends State<Screen2> {
           owner: message.data()['owner'].toString(),
           song_name: message.data()['song_name'].toString(),
           song_url: message.data()['song_url'].toString(),
+          img_url: message.data()['img'].toString(),
         ));
 
         setState(() {
@@ -74,6 +75,7 @@ class _Screen2State extends State<Screen2> {
             owner: message.data()['owner'].toString(),
             song_name: message.data()['song_name'].toString(),
             song_url: message.data()['song_url'].toString(),
+            img_url: message.data()['img'].toString(),
           ));
         }
 
@@ -128,7 +130,7 @@ class _Screen2State extends State<Screen2> {
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Container(
-                    height: 100,
+                    height: 200,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: owner_songs.map((pd) {
@@ -142,21 +144,30 @@ class _Screen2State extends State<Screen2> {
                                     song_url: pd.song_url,
                                     artist_email: pd.email,
                                     owned_email: pd.owner,
-                                    logo_url: "",
+                                    logo_url: pd.img_url,
                                   ),
                                 ));
                           },
-                          child: Container(
-                              width: 150,
-                              margin:
-                                  EdgeInsets.only(top: 10, left: 20, right: 20),
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 1.0),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(child: Text(pd.song_name))),
+                          child: Column(
+                            children: [
+                              Container(
+                                  width: 150,
+                                  height: 150,
+                                  margin: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20),
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(pd.img_url)),
+                                    border: Border.all(
+                                        color: Colors.black, width: 1.0),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(child: Text(''))),
+                              SizedBox(height: 10),
+                              Text(pd.song_name),
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),
@@ -176,7 +187,7 @@ class _Screen2State extends State<Screen2> {
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Container(
-                    height: 100,
+                    height: 200,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: songs.map((pd) {
@@ -190,21 +201,30 @@ class _Screen2State extends State<Screen2> {
                                     song_url: pd.song_url,
                                     artist_email: pd.email,
                                     owned_email: pd.owner,
-                                    logo_url: "",
+                                    logo_url: pd.img_url,
                                   ),
                                 ));
                           },
-                          child: Container(
-                              width: 150,
-                              margin:
-                                  EdgeInsets.only(top: 10, left: 20, right: 20),
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 1.0),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(child: Text(pd.song_name))),
+                          child: Column(
+                            children: [
+                              Container(
+                                  width: 150,
+                                  height: 150,
+                                  margin: EdgeInsets.only(
+                                      top: 10, left: 20, right: 20),
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(pd.img_url)),
+                                    border: Border.all(
+                                        color: Colors.black, width: 1.0),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(child: Text(''))),
+                              SizedBox(height: 10),
+                              Text(pd.song_name),
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),
