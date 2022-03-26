@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/artist/artist_home.dart';
 import 'package:revengers/screens/artist/artist_login.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: WelcomeScreen(),
+      home: PlayerNew(),
       routes: {
         // PlayerNew.routename: (context) => PlayerNew(),
         User_Login.routeName: (ctx) => User_Login(),
