@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/artist/artist_home.dart';
-
-import '../../widgets/appBar.dart';
+import 'package:revengers/screens/user/user_home.dart';
 
 class Artist_Login extends StatefulWidget {
   static const routeName = '/artist_login';
@@ -10,6 +10,7 @@ class Artist_Login extends StatefulWidget {
 }
 
 class _Artist_LoginState extends State<Artist_Login> {
+  final _auth = FirebaseAuth.instance;
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -18,7 +19,7 @@ class _Artist_LoginState extends State<Artist_Login> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.red[400],
-      appBar: myAppBar(title: "Artist Login."),
+      appBar: AppBar(title: Text("revengers")),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -34,12 +35,13 @@ class _Artist_LoginState extends State<Artist_Login> {
               padding: EdgeInsets.only(left: 40, right: 40),
               child: TextField(
                 controller: username,
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
                   filled: true,
                   fillColor: Colors.transparent,
-                  hintText: 'Username',
+                  hintText: 'Email',
                 ),
               ),
             ),
@@ -48,6 +50,7 @@ class _Artist_LoginState extends State<Artist_Login> {
               child: TextField(
                 controller: password,
                 obscureText: true,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20)),
@@ -61,12 +64,17 @@ class _Artist_LoginState extends State<Artist_Login> {
             Padding(
               padding: EdgeInsets.only(top: 40, left: 40, right: 40),
               child: ElevatedButton(
-                  onPressed: () {
-                    var username_string = username.text;
-                    var password_string = password.text;
-
-                    if (username_string == "1" && password_string == "1") {
-                      Navigator.of(context).pushNamed(Artist_Home.routeName);
+                  onPressed: () async {
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                        email: username.text,
+                        password: password.text,
+                      );
+                      if (user != null) {
+                        Navigator.of(context).pushNamed(User_Home.routeName);
+                      }
+                    } catch (e) {
+                      print(e);
                     }
                   },
                   child: Text('Login')),

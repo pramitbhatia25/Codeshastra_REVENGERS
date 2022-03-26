@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/user/user_home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:revengers/screens/user/user_register.dart';
 
 import '../../widgets/appBar.dart';
 
@@ -11,6 +13,7 @@ class User_Login extends StatefulWidget {
 }
 
 class _User_LoginState extends State<User_Login> {
+  final _auth = FirebaseAuth.instance;
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -62,15 +65,28 @@ class _User_LoginState extends State<User_Login> {
             Padding(
               padding: EdgeInsets.only(top: 40, left: 40, right: 40),
               child: ElevatedButton(
-                  onPressed: () {
-                    var username_string = username.text;
-                    var password_string = password.text;
-
-                    if (username_string == "1" && password_string == "1") {
-                      Navigator.of(context).pushNamed(User_Home.routeName);
+                  onPressed: () async {
+                    try {
+                      final user = await _auth.signInWithEmailAndPassword(
+                        email: username.text,
+                        password: password.text,
+                      );
+                      if (user != null) {
+                        Navigator.of(context).pushNamed(User_Home.routeName);
+                      }
+                    } catch (e) {
+                      print(e);
                     }
                   },
                   child: Text('Login')),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 40, left: 40, right: 40),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(User_Register.routeName);
+                  },
+                  child: Text('Register')),
             )
           ],
         ),

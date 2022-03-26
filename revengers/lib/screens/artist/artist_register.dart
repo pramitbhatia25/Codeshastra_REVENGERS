@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/artist/artist_home.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../widgets/appBar.dart';
 
 class Artist_Register extends StatefulWidget {
@@ -12,6 +12,7 @@ class Artist_Register extends StatefulWidget {
 class _Artist_RegisterState extends State<Artist_Register> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _Artist_RegisterState extends State<Artist_Register> {
                       borderRadius: BorderRadius.circular(20)),
                   filled: true,
                   fillColor: Colors.transparent,
-                  hintText: 'Username',
+                  hintText: 'Email',
                 ),
               ),
             ),
@@ -61,15 +62,19 @@ class _Artist_RegisterState extends State<Artist_Register> {
             Padding(
               padding: EdgeInsets.only(top: 40, left: 40, right: 40),
               child: ElevatedButton(
-                  onPressed: () {
-                    var username_string = username.text;
-                    var password_string = password.text;
-
-                    if (username_string == "1" && password_string == "1") {
-                      Navigator.of(context).pushNamed(Artist_Home.routeName);
+                  onPressed: () async {
+                    try {
+                      var newUSer = await _auth.createUserWithEmailAndPassword(
+                          email: username.toString(),
+                          password: password.toString());
+                      if (newUSer != null) {
+                        Navigator.of(context).pushNamed(Artist_Home.routeName);
+                      }
+                    } catch (e) {
+                      print(e);
                     }
                   },
-                  child: Text('Login')),
+                  child: Text('Register')),
             )
           ],
         ),
