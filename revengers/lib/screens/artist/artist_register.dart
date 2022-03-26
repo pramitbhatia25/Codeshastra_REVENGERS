@@ -65,8 +65,7 @@ class _Artist_RegisterState extends State<Artist_Register> {
                   onPressed: () async {
                     try {
                       var newUSer = await _auth.createUserWithEmailAndPassword(
-                          email: username.toString(),
-                          password: password.toString());
+                          email: username.text, password: password.text);
                       if (newUSer != null) {
                         Navigator.of(context).pushNamed(Artist_Home.routeName);
                       }
