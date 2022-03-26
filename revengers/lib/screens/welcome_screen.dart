@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:revengers/screens/artist/artist_login.dart';
 import 'package:revengers/screens/user/user_login.dart';
 import 'package:revengers/widgets/roundbutton.dart';
@@ -37,12 +36,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Column(
             children: [
               SizedBox(height: 150),
-              Container(
-                height: 150,
-                width: 150,
-                child: Lottie.asset('../assets/lottie/continuePage.json',
-                    height: 150),
-              ),
+              const Text('Revengers',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 40,
+                    fontFamily: 'Mogra',
+                  )),
+              // Container(
+              //   height: 150,
+              //   width: 150,
+              //   child: Lottie.asset('../assets/lottie/continuePage.json',
+              //       height: 150),
+              // ),
               SizedBox(height: 150), //lottie
               Expanded(
                 child: Container(

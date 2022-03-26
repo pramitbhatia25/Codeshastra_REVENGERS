@@ -24,7 +24,7 @@ class _User_LoginState extends State<User_Login> {
       backgroundColor: Colors.orange[100],
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -53,11 +53,11 @@ class _User_LoginState extends State<User_Login> {
                   controller: username,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                        // borderSide: BorderSide(width: 10, color: Colors.white),
+                        // borderSide: BorderSide(width: 0, color: Colors.white),
                         borderRadius: BorderRadius.circular(20)),
                     filled: true,
                     fillColor: Colors.transparent,
-                    hintText: 'Username',
+                    hintText: 'User Email',
                   ),
                 ),
               ),
@@ -71,37 +71,90 @@ class _User_LoginState extends State<User_Login> {
                         borderRadius: BorderRadius.circular(20)),
                     filled: true,
                     fillColor: Colors.transparent,
-                    hintText: 'Password',
+                    hintText: 'User Password',
                   ),
                 ),
               ),
               SizedBox(height: 50),
               Padding(
-                padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        final user = await _auth.signInWithEmailAndPassword(
-                          email: username.text,
-                          password: password.text,
-                        );
-                        if (user != null) {
-                          Navigator.of(context).pushNamed(User_Home.routeName);
-                        }
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: Text('Login')),
+                padding:
+                    const EdgeInsets.only(top: 30.0, left: 40.0, right: 40.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      width: 200.0,
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            try {
+                              final user =
+                                  await _auth.signInWithEmailAndPassword(
+                                email: username.text,
+                                password: password.text,
+                              );
+                              if (user != null) {
+                                Navigator.of(context)
+                                    .pushNamed(User_Home.routeName);
+                              }
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 15.0, bottom: 15),
+                            child: Text('Login As User',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                )),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            primary: Colors.orange[100],
+                          )),
+                    ),
+                  ],
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(User_Register.routeName);
-                    },
-                    child: Text('Register')),
-              )
+                padding:
+                    const EdgeInsets.only(top: 30.0, left: 60.0, right: 60.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Container(
+                      width: 200.0,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(User_Register.routeName);
+                          },
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 15.0, bottom: 15),
+                            child: Text('Sign Up!',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                )),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            primary: Colors.orange[100],
+                          )),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
