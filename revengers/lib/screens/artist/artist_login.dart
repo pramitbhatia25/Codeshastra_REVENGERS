@@ -5,6 +5,7 @@ import 'package:revengers/screens/user/user_register.dart';
 
 import '../../widgets/appBar.dart';
 import 'artist_home.dart';
+import 'artist_register.dart';
 
 class Artist_Login extends StatefulWidget {
   static const routeName = '/artist_login';
@@ -133,7 +134,7 @@ class _Artist_LoginState extends State<Artist_Login> {
                       child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context)
-                                .pushNamed(User_Register.routeName);
+                                .pushNamed(Artist_Register.routeName);
                           },
                           child: Padding(
                             padding:

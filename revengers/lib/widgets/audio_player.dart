@@ -52,7 +52,7 @@ class _PlayerNewState extends State<PlayerNew> {
     // TODO: implement initState
     super.initState();
     _player = AudioPlayer();
-    cache = AudioCache(fixedPlayer: _player);
+    // cache = AudioCache(fixedPlayer: _player);
 
     _player?.onAudioPositionChanged.listen((Duration p) => {
           if (p.inSeconds == musicLength.inSeconds - 10)
@@ -226,8 +226,10 @@ class _PlayerNewState extends State<PlayerNew> {
                                       musicLength.inSeconds - 1) {
                                     print("idk");
                                   } else {
-                                    cache?.play(
-                                        "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/24k%20magic.mp3?alt=media&token=74b43e51-af7b-4fc6-9005-a9bcedf758ea");
+                                    _player?.setUrl(
+                                        "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/love%20yourself.mp3?alt=media&token=ccb41994-7a4b-4fb7-a7ac-353a00f33212");
+                                    _player?.play;
+                                    // cache?.play("opening.mp3");
                                     setState(() {
                                       playBtn = Icons.pause;
                                       playing = true;

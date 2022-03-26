@@ -55,7 +55,7 @@ class _Artist_HomeState extends State<Artist_Home> {
     // TODO: implement initState
     super.initState();
     _player = AudioPlayer();
-    cache = AudioCache(fixedPlayer: _player);
+    // cache = AudioCache(fixedPlayer: _player);
 
     _player?.onAudioPositionChanged.listen((Duration p) =>
         {print('Current position: $p'), setState(() => position = p)});
@@ -63,243 +63,252 @@ class _Artist_HomeState extends State<Artist_Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavyBar(
-        //backgroundColor: ,
-        backgroundColor: Colors.white,
-        items: [
-          BottomNavyBarItem(
-            icon: Icon(
-              Icons.play_arrow,
-              color: Colors.blue,
-            ),
-            title: Text('Playing'),
-          ),
-          BottomNavyBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.orange,
-            ),
-            title: Text(
-              'Home',
-              style: TextStyle(color: Colors.orange),
-            ),
-          ),
-          BottomNavyBarItem(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        bottomNavigationBar: BottomNavyBar(
+          //backgroundColor: ,
+          backgroundColor: Colors.white,
+          items: [
+            BottomNavyBarItem(
               icon: Icon(
-                Icons.create,
-                color: Colors.purple,
+                Icons.play_arrow,
+                color: Colors.blue,
+              ),
+              title: Text('Playing'),
+            ),
+            BottomNavyBarItem(
+              icon: Icon(
+                Icons.home,
+                color: Colors.orange,
               ),
               title: Text(
-                'Create',
-                style: TextStyle(color: Colors.purple),
-              )),
-          BottomNavyBarItem(
-              icon: Icon(
-                Icons.money,
-                color: Colors.green,
+                'Home',
+                style: TextStyle(color: Colors.orange),
               ),
-              title: Text('Earnings', style: TextStyle(color: Colors.green))),
-        ],
-        selectedIndex: _currentIndex,
-        onItemSelected: (index) {
-          setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
-        },
-      ),
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          children: [
-            Scaffold(
-              resizeToAvoidBottomInset: true,
-              appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.lightBlue,
-                  title: Text('Currently Playing',
-                      style: TextStyle(fontSize: 23, letterSpacing: 1.5))),
-              //let's start by creating the main UI of the app
-              body: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.blue[800]!,
-                        Colors.blue[200]!,
-                      ]),
+            ),
+            BottomNavyBarItem(
+                icon: Icon(
+                  Icons.create,
+                  color: Colors.purple,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 10.0,
+                title: Text(
+                  'Create',
+                  style: TextStyle(color: Colors.purple),
+                )),
+            BottomNavyBarItem(
+                icon: Icon(
+                  Icons.money,
+                  color: Colors.green,
+                ),
+                title: Text('Earnings', style: TextStyle(color: Colors.green))),
+          ],
+          selectedIndex: _currentIndex,
+          onItemSelected: (index) {
+            setState(() => _currentIndex = index);
+            _pageController.jumpToPage(index);
+          },
+        ),
+        body: SizedBox.expand(
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            children: [
+              Scaffold(
+                resizeToAvoidBottomInset: true,
+                appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.lightBlue,
+                    title: Text('Currently Playing',
+                        style: TextStyle(fontSize: 23, letterSpacing: 1.5))),
+                //let's start by creating the main UI of the app
+                body: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.blue[800]!,
+                          Colors.blue[200]!,
+                        ]),
                   ),
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        //Let's add some text title
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            "Music Beats",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 38.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            "Listen to your favorite Music",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 24.0,
-                        ),
-                        //Let's add the music cover
-                        Center(
-                          child: Container(
-                            width: 280.0,
-                            height: 280.0,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.0),
-                                image: DecorationImage(
-                                  image: AssetImage("assets/image.png"),
-                                )),
-                          ),
-                        ),
-
-                        SizedBox(
-                          height: 18.0,
-                        ),
-                        Center(
-                          child: Text(
-                            "Stargazer",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30.0),
-                                topRight: Radius.circular(30.0),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 10.0,
+                    ),
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Let's add some text title
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              "Music Beats",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 38.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                //Let's start by adding the controller
-                                //let's add the time indicator text
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              "Listen to your favorite Music",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 24.0,
+                          ),
+                          //Let's add the music cover
+                          Center(
+                            child: Container(
+                              width: 280.0,
+                              height: 280.0,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  image: DecorationImage(
+                                    image: AssetImage("assets/image.png"),
+                                  )),
+                            ),
+                          ),
 
-                                Container(
-                                  width: 500.0,
-                                  child: Row(
+                          SizedBox(
+                            height: 18.0,
+                          ),
+                          Center(
+                            child: Text(
+                              "Stargazer",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  //Let's start by adding the controller
+                                  //let's add the time indicator text
+
+                                  Container(
+                                    width: 500.0,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${position.inMinutes}:${position.inSeconds.remainder(60)}",
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        slider(),
+                                        Flexible(
+                                          child: Text(
+                                            "${musicLength.inMinutes}:${musicLength.inSeconds.remainder(60)}",
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        "${position.inMinutes}:${position.inSeconds.remainder(60)}",
-                                        style: TextStyle(
-                                          fontSize: 18.0,
+                                      IconButton(
+                                        iconSize: 45.0,
+                                        color: Colors.blue,
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.skip_previous,
                                         ),
                                       ),
-                                      slider(),
-                                      Flexible(
-                                        child: Text(
-                                          "${musicLength.inMinutes}:${musicLength.inSeconds.remainder(60)}",
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                          ),
+                                      IconButton(
+                                        iconSize: 62.0,
+                                        color: Colors.blue[800],
+                                        onPressed: () {
+                                          //here we will add the functionality of the play button
+                                          if (!playing) {
+                                            //now let's play the song
+                                            // _player?.setUrl(
+                                            // "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/love%20yourself.mp3?alt=media&token=ccb41994-7a4b-4fb7-a7ac-353a00f33212");
+                                            _player?.play(
+                                                "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/uptown%20funk.mp3?alt=media&token=b7de9b98-194c-4838-a184-ada0ad8b0847");
+                                            // cache?.play("opening.mp3");
+                                            setState(() {
+                                              playBtn = Icons.pause;
+                                              playing = true;
+                                            });
+                                          } else {
+                                            _player?.pause();
+                                            setState(() {
+                                              playBtn = Icons.play_arrow;
+                                              playing = false;
+                                            });
+                                          }
+                                        },
+                                        icon: Icon(
+                                          playBtn,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        iconSize: 45.0,
+                                        color: Colors.blue,
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.skip_next,
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      iconSize: 45.0,
-                                      color: Colors.blue,
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.skip_previous,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      iconSize: 62.0,
-                                      color: Colors.blue[800],
-                                      onPressed: () {
-                                        //here we will add the functionality of the play button
-                                        if (!playing) {
-                                          //now let's play the song
-                                          cache?.play("opening.mp3");
-                                          setState(() {
-                                            playBtn = Icons.pause;
-                                            playing = true;
-                                          });
-                                        } else {
-                                          _player?.pause();
-                                          setState(() {
-                                            playBtn = Icons.play_arrow;
-                                            playing = false;
-                                          });
-                                        }
-                                      },
-                                      icon: Icon(
-                                        playBtn,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      iconSize: 45.0,
-                                      color: Colors.blue,
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.skip_next,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Screen2(),
-            Screen3(),
-            Screen4(),
-          ],
+              Screen2(),
+              Screen3(),
+              Screen4(),
+            ],
+          ),
         ),
       ),
     );

@@ -33,7 +33,12 @@ class MyApp extends StatelessWidget {
         // PlayerNew.routename: (context) => PlayerNew(),
         User_Login.routeName: (ctx) => User_Login(),
         User_Register.routeName: (ctx) => User_Register(),
-        User_Home.routeName: (ctx) => User_Home(),
+        User_Home.routeName: (ctx) => User_Home(
+            title: "",
+            artist_email: "",
+            logo_url: "",
+            owned_email: "",
+            song_url: ""),
         Artist_Login.routeName: (ctx) => Artist_Login(),
         Artist_Register.routeName: (ctx) => Artist_Register(),
         Artist_Home.routeName: (ctx) => Artist_Home(),

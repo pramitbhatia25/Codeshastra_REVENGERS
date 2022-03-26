@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:revengers/widgets/appBar.dart';
-import 'package:revengers/widgets/upload_function.dart';
-// import 'dart:html';
 import 'dart:typed_data';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:revengers/widgets/appBar.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,20 +21,27 @@ class _Screen3State extends State<Screen3> {
   TextEditingController fileUploaded = TextEditingController();
   TextEditingController bgImage = TextEditingController();
   TextEditingController songName = TextEditingController();
+  String a = "";
+
   FilePickerResult? image, song;
-  String? imagepath, songpath;
+  String? imagepath;
+  String songpath = "";
   Reference? ref;
   var image_down_url, song_down_url;
   final firestoreinstance = FirebaseFirestore.instance;
 
   void selectimage() async {
-    image = await FilePicker.platform.pickFiles();
+    image = await FilePicker.platform.pickFiles(withData: true);
+    if (song != null) {
+      print(image!.files.first);
+      Uint8List fileBytes = image!.files.first.bytes!;
+      String fileName = image!.files.first.name;
 
-    setState(() {
-      image = image;
-      imagepath = basename(image!.paths.toString());
-      uploadimagefile(image?.files.first.bytes, imagepath!);
-    });
+      // Upload file
+      await FirebaseStorage.instance
+          .ref('uploads/$fileName')
+          .putData(fileBytes);
+    }
   }
 
   void uploadimagefile(Uint8List? image, String imagepath) async {
@@ -44,30 +53,54 @@ class _Screen3State extends State<Screen3> {
   }
 
   void selectsong() async {
-    song = await FilePicker.platform.pickFiles();
+    song = await FilePicker.platform.pickFiles(withData: true);
+    if (song != null) {
+      print(song!.files.first);
+      Uint8List fileBytes = song!.files.first.bytes!;
+      String fileName = song!.files.first.name;
 
-    setState(() {
-      song = song;
-      songpath = basename(song!.paths.toString());
-      uploadsongfile(song!.files.first.bytes, songpath!);
-    });
+      // Upload file
+      await FirebaseStorage.instance
+          .ref('uploads/$fileName')
+          .putData(fileBytes);
+    }
+    // setState(() {
+    //   //songpath = 'saas';
+    //   // if (song?.paths != null) {
+    //   //   songpath = basename(song!.paths[0].toString());
+    //   //   print(song!.files.single);
+    //   //   uploadsongfile(song!.files.single.bytes, songpath);
+    //   // }
+    // });
+    // setState(() {
+    //   //song = song;
+
+    //   // songpath = basename(song?.paths.toString());
+
+    // });
   }
 
   void uploadsongfile(Uint8List? song, String songpath) async {
     ref = FirebaseStorage.instance.ref().child(songpath);
-    UploadTask uploadTask = ref!.putData(song!);
+    print(song);
+    UploadTask? uploadTask = ref!.putData(song!);
 
     song_down_url =
         await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
+    print(song_down_url);
+  }
+
+  _onTapButton(BuildContext context, data) {
+    return AlertDialog(title: Text(data));
   }
 
   finalupload(context) {
     if (songName.text != '' &&
         song_down_url != null &&
         image_down_url != null) {
-      print(songName.text);
-      print(song_down_url);
-      print(image_down_url.toString());
+      // print(songName.text);
+      // print(song_down_url);
+      // print(image_down_url.toString());
 
       var data = {'details': {}};
 
@@ -88,10 +121,6 @@ class _Screen3State extends State<Screen3> {
             _onTapButton(context, "Please Enter All Details :("),
       );
     }
-  }
-
-  _onTapButton(BuildContext context, data) {
-    return AlertDialog(title: Text(data));
   }
 
   @override
@@ -141,7 +170,7 @@ class _Screen3State extends State<Screen3> {
                                 color: Colors.black, width: 2.0),
                           ),
                           fillColor: Colors.transparent,
-                          hintText: 'Enter Song Name: ',
+                          hintText: 'Enter Song Name',
                           hintStyle: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -158,50 +187,50 @@ class _Screen3State extends State<Screen3> {
                           style: TextStyle(fontSize: 15)),
                       icon: Icon(Icons.upload),
                       onPressed: () {
-                        setState(() {
-                          if (songName.text != "") {
-                            selectsong();
-                            fileUploaded.text = songpath!;
-                          } else {
-                            Scaffold.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.purple,
-                                content: Text('Incorrect Details Entered',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        letterSpacing: 1.0,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w800)),
-                                duration: Duration(seconds: 3),
-                              ),
-                            );
-                          }
-                        });
+                        selectsong();
+                        // setState(() {
+                        //   if (songName.text != "") {
+                        //     fileUploaded.text = songpath;
+                        //   } else {
+                        //     Scaffold.of(context).showSnackBar(
+                        //       SnackBar(
+                        //         backgroundColor: Colors.purple,
+                        //         content: Text('Incorrect Details Entered',
+                        //             style: TextStyle(
+                        //                 color: Colors.white,
+                        //                 letterSpacing: 1.0,
+                        //                 fontSize: 15.0,
+                        //                 fontWeight: FontWeight.w800)),
+                        //         duration: Duration(seconds: 3),
+                        //       ),
+                        //     );
+                        //   }
+                        // });
                       },
                     ),
                   ),
                 ),
-                Center(
-                  child: TextField(
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 15, letterSpacing: 2),
-                    enabled: false,
-                    textAlign: TextAlign.center,
-                    controller: fileUploaded,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Colors.transparent, width: 2.0),
-                        ),
-                        fillColor: Colors.transparent,
-                        hintText: 'No MP3 file Selected',
-                        hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            letterSpacing: 2)),
-                  ),
-                ),
+                Center(child: Text('${songpath}')
+                    // child: TextField(
+                    //   style: TextStyle(
+                    //       color: Colors.white, fontSize: 15, letterSpacing: 2),
+                    //   enabled: false,
+                    //   textAlign: TextAlign.center,
+                    //   controller: fileUploaded,
+                    //   decoration: InputDecoration(
+                    //       border: InputBorder.none,
+                    //       enabledBorder: OutlineInputBorder(
+                    //         borderSide: const BorderSide(
+                    //             color: Colors.transparent, width: 2.0),
+                    //       ),
+                    //       fillColor: Colors.transparent,
+                    //       hintText: 'No MP3 file Selected',
+                    //       hintStyle: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 15,
+                    //           letterSpacing: 2)),
+                    // ),
+                    ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15.0),
@@ -210,39 +239,10 @@ class _Screen3State extends State<Screen3> {
                           style: TextStyle(fontSize: 15)),
                       icon: Icon(Icons.upload),
                       onPressed: () {
+                        selectimage();
                         setState(() {
-                          selectimage();
-                          bgImage.text = imagepath!;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: ElevatedButton.icon(
-                      label: Text('Create NFT', style: TextStyle(fontSize: 15)),
-                      icon: Icon(Icons.upload),
-                      onPressed: () {
-                        setState(() {
-                          firestoreinstance
-                              .collection("songs")
-                              .doc('tIH7UbUSFBNWBy2uhXQh')
-                              .update({
-                            'songs_created_name':
-                                FieldValue.arrayUnion([songName]),
-                            'songs_created_url':
-                                FieldValue.arrayUnion([song_down_url]),
-                            'songs_owned_url':
-                                FieldValue.arrayUnion([song_down_url]),
-                            'songs_owned_name':
-                                FieldValue.arrayUnion([songName]),
-                          }).whenComplete(() => showDialog(
-                                    context: context,
-                                    builder: (context) => _onTapButton(context,
-                                        "Files Uploaded Successfully :)"),
-                                  ));
+                          // a = imagepath;
+                          // bgImage.text = imagepath;
                         });
                       },
                     ),
@@ -262,13 +262,13 @@ class _Screen3State extends State<Screen3> {
                               color: Colors.transparent, width: 2.0),
                         ),
                         fillColor: Colors.transparent,
-                        hintText: 'No Image Selected',
+                        hintText: '$a',
                         hintStyle: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
                             letterSpacing: 2)),
                   ),
-                )
+                ),
               ],
             ),
           ),

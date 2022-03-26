@@ -44,6 +44,10 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   firebase_storage: ^10.2.9
   file_picker: ^4.5.1
+  localstorage: ^4.0.0+1
+  velocity_x: ^3.4.0
+  http: ^0.13.4
+  web3dart: ^2.0.0-dev.7
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +76,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/abi.json
     - assets/lottie/artistPage.json
     - assets/image.png
     - assets/opening.mp3

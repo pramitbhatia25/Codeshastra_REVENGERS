@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 import 'package:revengers/widgets/appBar.dart';
+import 'package:web3dart/web3dart.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class Screen4 extends StatefulWidget {
   const Screen4({Key? key}) : super(key: key);
@@ -10,6 +14,78 @@ class Screen4 extends StatefulWidget {
 
 class _Screen4State extends State<Screen4> {
   TextEditingController walletId = TextEditingController();
+  Client? httpsClient;
+  Web3Client? ethClient;
+  bool data = false;
+  TextEditingController val = TextEditingController();
+  int myamount = 1;
+  final myaddress = "0x21Fb5976b2d5c21F3C15389Ec110283D42d58Cf2";
+  var mydata;
+  @override
+  void initState() {
+    super.initState();
+    httpsClient = Client();
+    ethClient = Web3Client(
+        "https://kovan.infura.io/v3/9ce28d61467b44458cdd70c00ee54ae3",
+        httpsClient!);
+    //getBalance(myaddress);
+  }
+
+  Future<DeployedContract> loadContract() async {
+    String abi = await rootBundle.loadString("assets/abi.json");
+    String contractAddress = "0xF4dc48141B5Abe74aD0986dbfD8C424da32575C4";
+    final contract = DeployedContract(ContractAbi.fromJson(abi, "Bank"),
+        EthereumAddress.fromHex(contractAddress));
+    return contract;
+  }
+
+  Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
+    final contract = await loadContract();
+    final ethFunction = contract.function(functionName);
+    print(ethFunction.outputs);
+    final result = await ethClient!
+        .call(contract: contract, function: ethFunction, params: []);
+    print(result);
+    return result;
+  }
+
+  Future<void> getBalance(String targetaddress) async {
+    EthereumAddress address = EthereumAddress.fromHex(targetaddress);
+    List<dynamic> result = await query("getBalance", []);
+    mydata = result[0];
+    data = true;
+    setState(() {});
+  }
+
+  Future<String> submit(String functionName, List<dynamic> args) async {
+    EthPrivateKey credentials = EthPrivateKey.fromHex(
+        "3ee7532b8f3acbbbd9b2ccf437ec76ed985360712c03d97ce1fa1e72378112c9");
+
+    DeployedContract contract = await loadContract();
+    final ethFunction = contract.function(functionName);
+
+    final result = await ethClient!.sendTransaction(
+        credentials,
+        Transaction.callContract(
+            contract: contract, function: ethFunction, parameters: args),
+        chainId: 42);
+
+    return result;
+  }
+
+  Future<String> sendCoin() async {
+    var Bigamount = BigInt.from(myamount);
+    var response = await submit("deposit", [Bigamount]);
+    print("Deposited");
+    return response;
+  }
+
+  Future<String> withdrawCoin() async {
+    var Bigamount = BigInt.from(myamount);
+    var response = await submit("withdraw", [Bigamount]);
+    print("withdrawn");
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +118,7 @@ class _Screen4State extends State<Screen4> {
               children: [
                 //Let's add some text title
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
+                  padding: const EdgeInsets.only(left: 12.0, top: 20),
                   child: Text(
                     "Your Earnings",
                     style: TextStyle(
@@ -52,7 +128,7 @@ class _Screen4State extends State<Screen4> {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 8.0, right: 20, left: 20, bottom: 8),
@@ -89,6 +165,8 @@ class _Screen4State extends State<Screen4> {
                               duration: Duration(seconds: 3),
                             ),
                           );
+                        } else {
+                          getBalance(myaddress);
                         }
                         FocusScope.of(context).unfocus();
                       },
@@ -99,6 +177,47 @@ class _Screen4State extends State<Screen4> {
                         primary: Colors.transparent,
                       )),
                 ),
+                Center(
+                    child: "Balance".text.gray400.xl2.semiBold.makeCentered()),
+                10.heightBox,
+                data
+                    ? "\$${mydata}".text.xl5.bold.makeCentered().shimmer()
+                    : CircularProgressIndicator().centered(),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: val,
+                      onChanged: (value) {
+                        setState(() {
+                          var a = val.text, myamount = int.parse(a) * 100;
+                        });
+                      },
+                      decoration:
+                          InputDecoration(border: OutlineInputBorder())),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () => sendCoin(),
+                      label: 'Deposit'.text.black.make(),
+                      icon: Icon(
+                        Icons.refresh,
+                        color: Colors.black,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () => getBalance(myaddress),
+                      label: 'Refresh'.text.black.make(),
+                      icon: Icon(
+                        Icons.call_made_outlined,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
