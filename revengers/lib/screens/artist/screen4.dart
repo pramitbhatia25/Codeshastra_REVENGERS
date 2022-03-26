@@ -42,7 +42,7 @@ class _Screen4State extends State<Screen4> {
               children: [
                 //Let's add some text title
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
+                  padding: const EdgeInsets.only(left: 12.0, top: 20),
                   child: Text(
                     "Your Earnings",
                     style: TextStyle(
@@ -52,7 +52,7 @@ class _Screen4State extends State<Screen4> {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 8.0, right: 20, left: 20, bottom: 8),

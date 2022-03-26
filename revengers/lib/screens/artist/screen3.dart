@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:revengers/widgets/appBar.dart';
 
 class Screen3 extends StatefulWidget {
@@ -12,6 +13,7 @@ class _Screen3State extends State<Screen3> {
   TextEditingController fileUploaded = TextEditingController();
   TextEditingController bgImage = TextEditingController();
   TextEditingController songName = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +61,7 @@ class _Screen3State extends State<Screen3> {
                                 color: Colors.black, width: 2.0),
                           ),
                           fillColor: Colors.transparent,
-                          hintText: 'Enter Song Name: ',
+                          hintText: 'Enter Song Name',
                           hintStyle: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -154,7 +156,7 @@ class _Screen3State extends State<Screen3> {
                             fontSize: 15,
                             letterSpacing: 2)),
                   ),
-                )
+                ),
               ],
             ),
           ),

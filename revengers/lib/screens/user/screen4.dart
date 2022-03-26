@@ -40,6 +40,7 @@ class _Screen4State extends State<Screen4> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 20),
                 //Let's add some text title
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
@@ -52,7 +53,7 @@ class _Screen4State extends State<Screen4> {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 8.0, right: 20, left: 20, bottom: 8),

@@ -9,6 +9,7 @@ class Screen3 extends StatefulWidget {
 }
 
 class _Screen3State extends State<Screen3> {
+  TextEditingController songName = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,29 +30,66 @@ class _Screen3State extends State<Screen3> {
                 Colors.purple[200]!,
               ]),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 10.0,
-          ),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //Let's add some text title
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    "Search",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 38.0,
-                      fontWeight: FontWeight.bold,
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 180,
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            letterSpacing: 2),
+                        textAlign: TextAlign.center,
+                        controller: songName,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Song Name',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                letterSpacing: 2)),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Center(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      label: Padding(
+                        padding: const EdgeInsets.only(top: 18.0, bottom: 18),
+                        child: Text('Search', style: TextStyle(fontSize: 15)),
+                      ),
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+            ],
           ),
         ),
       ),

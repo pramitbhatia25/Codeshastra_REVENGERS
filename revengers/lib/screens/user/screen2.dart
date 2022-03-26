@@ -9,6 +9,8 @@ class Screen2 extends StatefulWidget {
 }
 
 class _Screen2State extends State<Screen2> {
+  List<String> songs = ["Uptown Funk", "Shakira"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,15 +40,70 @@ class _Screen2State extends State<Screen2> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //Let's add some text title
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
                   child: Text(
-                    "Your Songs",
+                    "Owned Songs",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 38.0,
+                      fontSize: 30.0,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Container(
+                    height: 100,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: songs.map((pd) {
+                        return Container(
+                            width: 150,
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 20),
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black, width: 1.0),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(child: Text("Song")));
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Text(
+                    "Availaible Songs",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Container(
+                    height: 100,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: songs.map((pd) {
+                        return Container(
+                            width: 150,
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 20),
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black, width: 1.0),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(child: Text("Song")));
+                      }).toList(),
                     ),
                   ),
                 ),
