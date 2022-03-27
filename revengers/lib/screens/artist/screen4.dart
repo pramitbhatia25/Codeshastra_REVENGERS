@@ -181,13 +181,18 @@ class _Screen4State extends State<Screen4> {
                             primary: Colors.transparent,
                           )),
                     ),
-                    Center(
-                        child:
-                            "Balance".text.gray400.xl2.semiBold.makeCentered()),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: Text(
+                        "Balance: \$${mydata}",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
                     10.heightBox,
                     data
                         ? "\$${mydata}".text.xl5.bold.makeCentered().shimmer()
-                        : CircularProgressIndicator().centered(),
+                        : Text(''),
                     // Padding(
                     //   padding: const EdgeInsets.only(
                     //       top: 8.0, right: 20, left: 20, bottom: 8),

@@ -52,13 +52,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               //   child: Lottie.asset('../assets/lottie/continuePage.json',
               //       height: 150),
               // ),
-<<<<<<< HEAD
-              Lottie.asset("assets/lottie/artistPage.json", height: 200),
-              SizedBox(height: 40),
-=======
               Lottie.asset('assets/lottie/artistPage.json',
                   height: 200.0), //lottie
->>>>>>> fb8713862c5f1cc02fe7e58fa384890d2a1d52ba
               Expanded(
                 child: Container(
                   height: 100,
