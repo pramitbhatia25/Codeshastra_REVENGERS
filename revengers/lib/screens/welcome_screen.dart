@@ -6,7 +6,7 @@ import 'package:revengers/widgets/roundbutton.dart';
 import 'package:lottie/lottie.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  static const routeName = '/welcome_screen';
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();

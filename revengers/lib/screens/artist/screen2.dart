@@ -5,6 +5,7 @@ import 'package:revengers/screens/artist/artist_home.dart';
 import 'package:revengers/widgets/appBar.dart';
 
 import '../../widgets/song.dart';
+import '../welcome_screen.dart';
 
 class Screen2 extends StatefulWidget {
   const Screen2({Key? key}) : super(key: key);
@@ -142,6 +143,13 @@ class _Screen2State extends State<Screen2> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _auth.signOut();
+              Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+            },
+          ),
           automaticallyImplyLeading: false,
           backgroundColor: Colors.orange,
           title:

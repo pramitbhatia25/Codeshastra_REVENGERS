@@ -2,13 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:revengers/screens/user/user_home.dart';
+import 'package:revengers/screens/welcome_screen.dart';
 import 'package:revengers/widgets/appBar.dart';
 
 import '../../widgets/song.dart';
 
 class Screen2 extends StatefulWidget {
-  const Screen2({Key? key}) : super(key: key);
-
   @override
   State<Screen2> createState() => _Screen2State();
 }
@@ -95,147 +94,159 @@ class _Screen2State extends State<Screen2> {
       appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.orange,
+          leading: IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _auth.signOut();
+              Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+            },
+          ),
           title:
               Text('Home', style: TextStyle(fontSize: 23, letterSpacing: 1.5))),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.orange[800]!,
-                Colors.orange[200]!,
-              ]),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 10.0,
+      body: SingleChildScrollView(
+        child: Container(
+          height: 700,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.orange[800]!,
+                  Colors.orange[200]!,
+                ]),
           ),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    "Owned Songs",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 10.0,
+            ),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(
+                      "Owned Songs",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Container(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: owner_songs.map((pd) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => User_Home(
-                                    currentIndex: 1,
-                                    title: pd.song_name,
-                                    song_url: pd.song_url,
-                                    artist_email: pd.email,
-                                    owned_email: pd.owner,
-                                    logo_url: pd.img_url,
-                                    price: pd.price,
-                                  ),
-                                ));
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: 150,
-                                  height: 150,
-                                  margin: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20),
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(pd.img_url)),
-                                    border: Border.all(
-                                        color: Colors.black, width: 1.0),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(child: Text(''))),
-                              SizedBox(height: 10),
-                              Text(pd.song_name),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Text(
-                    "Availaible Songs",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Container(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: songs.map((pd) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => User_Home(
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Container(
+                      height: 200,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: owner_songs.map((pd) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => User_Home(
                                       currentIndex: 1,
                                       title: pd.song_name,
                                       song_url: pd.song_url,
                                       artist_email: pd.email,
                                       owned_email: pd.owner,
                                       logo_url: pd.img_url,
-                                      price: pd.price),
-                                ));
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: 150,
-                                  height: 150,
-                                  margin: EdgeInsets.only(
-                                      top: 10, left: 20, right: 20),
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(pd.img_url)),
-                                    border: Border.all(
-                                        color: Colors.black, width: 1.0),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(child: Text(''))),
-                              SizedBox(height: 10),
-                              Text(pd.song_name),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+                                      price: pd.price,
+                                    ),
+                                  ));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: 150,
+                                    height: 150,
+                                    margin: EdgeInsets.only(
+                                        top: 10, left: 20, right: 20),
+                                    padding:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(pd.img_url)),
+                                      border: Border.all(
+                                          color: Colors.black, width: 1.0),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(child: Text(''))),
+                                SizedBox(height: 10),
+                                Text(pd.song_name),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Text(
+                      "Availaible Songs",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Container(
+                      height: 200,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: songs.map((pd) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => User_Home(
+                                        currentIndex: 1,
+                                        title: pd.song_name,
+                                        song_url: pd.song_url,
+                                        artist_email: pd.email,
+                                        owned_email: pd.owner,
+                                        logo_url: pd.img_url,
+                                        price: pd.price),
+                                  ));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: 150,
+                                    height: 150,
+                                    margin: EdgeInsets.only(
+                                        top: 10, left: 20, right: 20),
+                                    padding:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(pd.img_url)),
+                                      border: Border.all(
+                                          color: Colors.black, width: 1.0),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(child: Text(''))),
+                                SizedBox(height: 10),
+                                Text(pd.song_name),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

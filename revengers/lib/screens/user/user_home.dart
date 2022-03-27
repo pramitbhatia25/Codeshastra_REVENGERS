@@ -139,174 +139,178 @@ class _User_HomeState extends State<User_Home> {
             children: [
               Screen2(),
               Scaffold(
-                resizeToAvoidBottomInset: false,
+                resizeToAvoidBottomInset: true,
                 appBar: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.lightBlue,
                     title: Text('Currently Playing',
                         style: TextStyle(fontSize: 23, letterSpacing: 1.5))),
                 //let's start by creating the main UI of the app
-                body: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.blue[800]!,
-                          Colors.blue[200]!,
-                        ]),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 0.0,
+                body: SingleChildScrollView(
+                  child: Container(
+                    height: 700,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.blue[800]!,
+                            Colors.blue[200]!,
+                          ]),
                     ),
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 10),
-                          //Let's add some text title
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 0.0,
+                      ),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            //Let's add some text title
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Center(
+                                child: Text(
+                                  "NFT Owned By: ${widget.owned_email}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 12.0, top: 5),
+                                child: Text(
+                                  "NFT Artist: ${widget.artist_email}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 24.0,
+                            ),
+                            //Let's add the music cover
+                            Center(
+                              child: Container(
+                                width: 200.0,
+                                height: 200.0,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(widget.logo_url),
+                                    )),
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: 18.0,
+                            ),
+                            Center(
                               child: Text(
-                                "NFT Owned By: ${widget.artist_email}",
+                                widget.title,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 32.0,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 12.0, top: 5),
-                              child: Text(
-                                "NFT Artist: ${widget.artist_email}",
-                                style: TextStyle(
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
                                   color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 24.0,
-                          ),
-                          //Let's add the music cover
-                          Center(
-                            child: Container(
-                              width: 200.0,
-                              height: 200.0,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  image: DecorationImage(
-                                    image: NetworkImage(widget.logo_url),
-                                  )),
-                            ),
-                          ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    //Let's start by adding the controller
+                                    //let's add the time indicator text
 
-                          SizedBox(
-                            height: 18.0,
-                          ),
-                          Center(
-                            child: Text(
-                              widget.title,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 32.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30.0),
-                                  topRight: Radius.circular(30.0),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  //Let's start by adding the controller
-                                  //let's add the time indicator text
-
-                                  Container(
-                                    width: 500.0,
-                                    child: Row(
+                                    Container(
+                                      width: 500.0,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "${position.inMinutes}:${position.inSeconds.remainder(60)}",
+                                            style: TextStyle(
+                                              fontSize: 18.0,
+                                            ),
+                                          ),
+                                          slider(),
+                                          Flexible(
+                                            child: Text(
+                                              "${musicLength.inMinutes}:${musicLength.inSeconds.remainder(60)}",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          "${position.inMinutes}:${position.inSeconds.remainder(60)}",
-                                          style: TextStyle(
-                                            fontSize: 18.0,
-                                          ),
-                                        ),
-                                        slider(),
-                                        Flexible(
-                                          child: Text(
-                                            "${musicLength.inMinutes}:${musicLength.inSeconds.remainder(60)}",
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                            ),
+                                        IconButton(
+                                          iconSize: 62.0,
+                                          color: Colors.blue[800],
+                                          onPressed: () {
+                                            //here we will add the functionality of the play button
+                                            if (!playing) {
+                                              //now let's play the song
+                                              // _player?.setUrl(
+                                              // "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/love%20yourself.mp3?alt=media&token=ccb41994-7a4b-4fb7-a7ac-353a00f33212");
+                                              _player?.play(widget.song_url);
+                                              // cache?.play("opening.mp3");
+                                              setState(() {
+                                                playBtn = Icons.pause;
+                                                playing = true;
+                                              });
+                                            } else {
+                                              _player?.pause();
+                                              setState(() {
+                                                playBtn = Icons.play_arrow;
+                                                playing = false;
+                                              });
+                                            }
+                                          },
+                                          icon: Icon(
+                                            playBtn,
                                           ),
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                        iconSize: 62.0,
-                                        color: Colors.blue[800],
-                                        onPressed: () {
-                                          //here we will add the functionality of the play button
-                                          if (!playing) {
-                                            //now let's play the song
-                                            // _player?.setUrl(
-                                            // "https://firebasestorage.googleapis.com/v0/b/revengers-88a84.appspot.com/o/love%20yourself.mp3?alt=media&token=ccb41994-7a4b-4fb7-a7ac-353a00f33212");
-                                            _player?.play(widget.song_url);
-                                            // cache?.play("opening.mp3");
-                                            setState(() {
-                                              playBtn = Icons.pause;
-                                              playing = true;
-                                            });
-                                          } else {
-                                            _player?.pause();
-                                            setState(() {
-                                              playBtn = Icons.play_arrow;
-                                              playing = false;
-                                            });
-                                          }
-                                        },
-                                        icon: Icon(
-                                          playBtn,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

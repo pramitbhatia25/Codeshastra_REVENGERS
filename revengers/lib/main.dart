@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // PlayerNew.routename: (context) => PlayerNew(),
         User_Login.routeName: (ctx) => User_Login(),
+        WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
         User_Register.routeName: (ctx) => User_Register(),
         User_Home.routeName: (ctx) => User_Home(
             currentIndex: 0,
