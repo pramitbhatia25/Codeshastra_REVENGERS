@@ -1,6 +1,6 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +21,21 @@ class _Screen3State extends State<Screen3> {
   TextEditingController fileUploaded = TextEditingController();
   TextEditingController bgImage = TextEditingController();
   TextEditingController songName = TextEditingController();
+  final _auth = FirebaseAuth.instance;
   String a = "";
 
   FilePickerResult? image, song;
   String? imagepath;
   String songpath = "";
   Reference? ref;
+  Uint8List? imgfileBytes;
+  Uint8List? songfileBytes;
+  String? imgfileName;
+  String? songfileName;
+  bool imaageCheck = false;
+  bool songcheck = false;
+  List<String> genre = ["", "", ""];
+
   var image_down_url, song_down_url;
   final firestoreinstance = FirebaseFirestore.instance;
 
@@ -34,13 +43,11 @@ class _Screen3State extends State<Screen3> {
     image = await FilePicker.platform.pickFiles(withData: true);
     if (song != null) {
       print(image!.files.first);
-      Uint8List fileBytes = image!.files.first.bytes!;
-      String fileName = image!.files.first.name;
+      imgfileBytes = image!.files.first.bytes!;
+      imgfileName = image!.files.first.name;
 
       // Upload file
-      await FirebaseStorage.instance
-          .ref('uploads/$fileName')
-          .putData(fileBytes);
+      //await FirebaseStorage.instance.ref(imgfileName).putData(imgfileBytes!);
     }
   }
 
@@ -56,13 +63,11 @@ class _Screen3State extends State<Screen3> {
     song = await FilePicker.platform.pickFiles(withData: true);
     if (song != null) {
       print(song!.files.first);
-      Uint8List fileBytes = song!.files.first.bytes!;
-      String fileName = song!.files.first.name;
+      songfileBytes = song!.files.first.bytes!;
+      songfileName = song!.files.first.name;
 
       // Upload file
-      await FirebaseStorage.instance
-          .ref('uploads/$fileName')
-          .putData(fileBytes);
+      //await FirebaseStorage.instance.ref(songfileName).putData(songfileBytes!);
     }
     // setState(() {
     //   //songpath = 'saas';
@@ -94,33 +99,30 @@ class _Screen3State extends State<Screen3> {
     return AlertDialog(title: Text(data));
   }
 
-  finalupload(context) {
-    if (songName.text != '' &&
-        song_down_url != null &&
-        image_down_url != null) {
-      // print(songName.text);
-      // print(song_down_url);
-      // print(image_down_url.toString());
-
-      var data = {'details': {}};
-
-      firestoreinstance.collection("songs").doc('tIH7UbUSFBNWBy2uhXQh').update({
-        'songs_created_name': FieldValue.arrayUnion([songName]),
-        'songs_created_url': FieldValue.arrayUnion([song_down_url]),
-        'songs_owned_url': FieldValue.arrayUnion([song_down_url]),
-        'songs_owned_name': FieldValue.arrayUnion([songName]),
-      }).whenComplete(() => showDialog(
-            context: context,
-            builder: (context) =>
-                _onTapButton(context, "Files Uploaded Successfully :)"),
-          ));
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) =>
-            _onTapButton(context, "Please Enter All Details :("),
-      );
-    }
+  finalupload(context) async {
+    Map<String, dynamic> songdata = {
+      'email': _auth.currentUser!.email,
+      'genre': genre,
+      'img': FirebaseStorage.instance.ref(imgfileName).getDownloadURL(),
+      'owner': _auth.currentUser!.email,
+      'price': 0.0001,
+      'song_name': songName,
+      'song_url': FirebaseStorage.instance.ref(songfileName).getDownloadURL(),
+    };
+    await FirebaseStorage.instance.ref(imgfileName).putData(imgfileBytes!);
+    await FirebaseStorage.instance.ref(songfileName).putData(songfileBytes!);
+    await FirebaseFirestore.instance.collection('songs').add(songdata);
+    await FirebaseFirestore.instance
+        .collection('artist')
+        .doc('xUJ0qbqpYQYF0vgTicrH')
+        .update({
+      'songs_created_name': FieldValue.arrayUnion([songName]),
+      'songs_created_url': FieldValue.arrayUnion(
+          [FirebaseStorage.instance.ref(songfileName).getDownloadURL()]),
+      'songs_owned_name': FieldValue.arrayUnion([songName]),
+      'songs_owned_url': FieldValue.arrayUnion(
+          [FirebaseStorage.instance.ref(songfileName).getDownloadURL()]),
+    });
   }
 
   @override
@@ -180,37 +182,149 @@ class _Screen3State extends State<Screen3> {
                 ),
                 SizedBox(height: 20),
                 Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: ElevatedButton.icon(
-                      label: Text('Choose MP3 File To Upload',
-                          style: TextStyle(fontSize: 15)),
-                      icon: Icon(Icons.upload),
-                      onPressed: () {
-                        selectsong();
-                        // setState(() {
-                        //   if (songName.text != "") {
-                        //     fileUploaded.text = songpath;
-                        //   } else {
-                        //     Scaffold.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         backgroundColor: Colors.purple,
-                        //         content: Text('Incorrect Details Entered',
-                        //             style: TextStyle(
-                        //                 color: Colors.white,
-                        //                 letterSpacing: 1.0,
-                        //                 fontSize: 15.0,
-                        //                 fontWeight: FontWeight.w800)),
-                        //         duration: Duration(seconds: 3),
-                        //       ),
-                        //     );
-                        //   }
-                        // });
+                  child: Container(
+                    width: 250,
+                    child: TextField(
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 15, letterSpacing: 2),
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        setState(() {
+                          genre[0] = value;
+                        });
                       },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                                color: Colors.black, width: 2.0),
+                          ),
+                          fillColor: Colors.transparent,
+                          hintText: 'Enter Genre 1',
+                          hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              letterSpacing: 2)),
                     ),
                   ),
                 ),
-                Center(child: Text('${songpath}')
+                SizedBox(
+                  height: 10.0,
+                ),
+                Center(
+                  child: Container(
+                    width: 250,
+                    child: TextField(
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 15, letterSpacing: 2),
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        setState(() {
+                          genre[1] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                                color: Colors.black, width: 2.0),
+                          ),
+                          fillColor: Colors.transparent,
+                          hintText: 'Enter Genre 2',
+                          hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              letterSpacing: 2)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Container(
+                    width: 250,
+                    child: TextField(
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 15, letterSpacing: 2),
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        setState(() {
+                          genre[2] = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                                color: Colors.black, width: 2.0),
+                          ),
+                          fillColor: Colors.transparent,
+                          hintText: 'Enter Genre 3',
+                          hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              letterSpacing: 2)),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                        value: songcheck,
+                        onChanged: (value) {},
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        checkColor: Colors.purple,
+                        activeColor: Colors.white,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: ElevatedButton.icon(
+                          label: Text('Choose MP3 File To Upload',
+                              style: TextStyle(fontSize: 15)),
+                          icon: Icon(Icons.upload),
+                          onPressed: () {
+                            selectsong();
+                            setState(() {
+                              songcheck = true;
+                              if (songName.text != "") {
+                                fileUploaded.text = songpath;
+                              }
+                              //else {
+                              //     Scaffold.of(context).showSnackBar(
+                              //       SnackBar(
+                              //         backgroundColor: Colors.purple,
+                              //         content: Text('Incorrect Details Entered',
+                              //             style: TextStyle(
+                              //                 color: Colors.white,
+                              //                 letterSpacing: 1.0,
+                              //                 fontSize: 15.0,
+                              //                 fontWeight: FontWeight.w800)),
+                              //         duration: Duration(seconds: 3),
+                              //       ),
+                              //     );
+                              //   }
+                              // });
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Center(
+                    child: Text(
+                  fileUploaded.text,
+                  style: TextStyle(color: Colors.white),
+                )
                     // child: TextField(
                     //   style: TextStyle(
                     //       color: Colors.white, fontSize: 15, letterSpacing: 2),
@@ -232,20 +346,37 @@ class _Screen3State extends State<Screen3> {
                     // ),
                     ),
                 Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: ElevatedButton.icon(
-                      label: Text('Choose Background Image To Upload',
-                          style: TextStyle(fontSize: 15)),
-                      icon: Icon(Icons.upload),
-                      onPressed: () {
-                        selectimage();
-                        setState(() {
-                          // a = imagepath;
-                          // bgImage.text = imagepath;
-                        });
-                      },
-                    ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Checkbox(
+                          value: imaageCheck,
+                          onChanged: (value) {},
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          activeColor: Colors.white,
+                          checkColor: Colors.purple,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: ElevatedButton.icon(
+                          label: Text('Choose Background Image To Upload',
+                              style: TextStyle(fontSize: 15)),
+                          icon: Icon(Icons.upload),
+                          onPressed: () {
+                            selectimage();
+                            setState(() {
+                              imaageCheck = true;
+                              // a = imagepath;
+                              // bgImage.text = imagepath;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Center(
@@ -267,6 +398,22 @@ class _Screen3State extends State<Screen3> {
                             color: Colors.white,
                             fontSize: 15,
                             letterSpacing: 2)),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: ElevatedButton.icon(
+                      label: Text('Upload', style: TextStyle(fontSize: 15)),
+                      icon: Icon(Icons.upload),
+                      onPressed: () {
+                        finalupload(context);
+                        setState(() {
+                          // a = imagepath;
+                          // bgImage.text = imagepath;
+                        });
+                      },
+                    ),
                   ),
                 ),
               ],
