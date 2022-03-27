@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,7 +35,7 @@ class _Screen3State extends State<Screen3> {
   String? songfileName;
   bool imaageCheck = false;
   bool songcheck = false;
-  List<String> genre = ["", "", ""];
+  var genre = ["", "", ""];
 
   var image_down_url, song_down_url;
   final firestoreinstance = FirebaseFirestore.instance;
@@ -100,28 +101,29 @@ class _Screen3State extends State<Screen3> {
   }
 
   finalupload(context) async {
+    await FirebaseStorage.instance.ref(imgfileName).putData(imgfileBytes!);
+    await FirebaseStorage.instance.ref(songfileName).putData(songfileBytes!);
     Map<String, dynamic> songdata = {
       'email': _auth.currentUser!.email,
       'genre': genre,
-      'img': FirebaseStorage.instance.ref(imgfileName).getDownloadURL(),
+      'img': await FirebaseStorage.instance.ref(imgfileName).getDownloadURL(),
       'owner': _auth.currentUser!.email,
       'price': 0.0001,
-      'song_name': songName,
-      'song_url': FirebaseStorage.instance.ref(songfileName).getDownloadURL(),
+      'song_name': songName.text.toString(),
+      'song_url':
+          await FirebaseStorage.instance.ref(songfileName).getDownloadURL(),
     };
-    await FirebaseStorage.instance.ref(imgfileName).putData(imgfileBytes!);
-    await FirebaseStorage.instance.ref(songfileName).putData(songfileBytes!);
     await FirebaseFirestore.instance.collection('songs').add(songdata);
     await FirebaseFirestore.instance
         .collection('artist')
         .doc('xUJ0qbqpYQYF0vgTicrH')
         .update({
-      'songs_created_name': FieldValue.arrayUnion([songName]),
+      'songs_created_name': FieldValue.arrayUnion([songName.text.toString()]),
       'songs_created_url': FieldValue.arrayUnion(
-          [FirebaseStorage.instance.ref(songfileName).getDownloadURL()]),
-      'songs_owned_name': FieldValue.arrayUnion([songName]),
+          [await FirebaseStorage.instance.ref(songfileName).getDownloadURL()]),
+      'songs_owned_name': FieldValue.arrayUnion([songName.text.toString()]),
       'songs_owned_url': FieldValue.arrayUnion(
-          [FirebaseStorage.instance.ref(songfileName).getDownloadURL()]),
+          [await FirebaseStorage.instance.ref(songfileName).getDownloadURL()]),
     });
   }
 
