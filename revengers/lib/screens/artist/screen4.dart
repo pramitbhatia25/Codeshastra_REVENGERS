@@ -188,52 +188,52 @@ class _Screen4State extends State<Screen4> {
                     data
                         ? "\$${mydata}".text.xl5.bold.makeCentered().shimmer()
                         : CircularProgressIndicator().centered(),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8.0, right: 20, left: 20, bottom: 8),
-                      child: TextField(
-                        controller: val,
-                        onChanged: (value) {
-                          setState(() {
-                            var a = val.text, myamount = int.parse(a) * 100;
-                          });
-                        },
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 2.0),
-                            ),
-                            fillColor: Colors.transparent,
-                            hintText: 'Enter Amount To Deposit',
-                            hintStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                letterSpacing: 2)),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () => sendCoin(),
-                          label: 'Deposit'.text.black.make(),
-                          icon: Icon(
-                            Icons.refresh,
-                            color: Colors.black,
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () => getBalance(myaddress),
-                          label: 'Refresh'.text.black.make(),
-                          icon: Icon(
-                            Icons.call_made_outlined,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.only(
+                    //       top: 8.0, right: 20, left: 20, bottom: 8),
+                    //   child: TextField(
+                    //     controller: val,
+                    //     onChanged: (value) {
+                    //       setState(() {
+                    //         var a = val.text, myamount = int.parse(a) * 100;
+                    //       });
+                    //     },
+                    //     keyboardType: TextInputType.number,
+                    //     decoration: InputDecoration(
+                    //         enabledBorder: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(20),
+                    //           borderSide: const BorderSide(
+                    //               color: Colors.black, width: 2.0),
+                    //         ),
+                    //         fillColor: Colors.transparent,
+                    //         hintText: 'Enter Amount To Deposit',
+                    //         hintStyle: TextStyle(
+                    //             color: Colors.white,
+                    //             fontSize: 20,
+                    //             letterSpacing: 2)),
+                    //   ),
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     TextButton.icon(
+                    //       onPressed: () => sendCoin(),
+                    //       label: 'Deposit'.text.black.make(),
+                    //       icon: Icon(
+                    //         Icons.refresh,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //     TextButton.icon(
+                    //       onPressed: () => getBalance(myaddress),
+                    //       label: 'Refresh'.text.black.make(),
+                    //       icon: Icon(
+                    //         Icons.call_made_outlined,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // )
                   ],
                 ),
               ),

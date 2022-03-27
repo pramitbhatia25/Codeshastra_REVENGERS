@@ -8,8 +8,6 @@ import '../../widgets/song.dart';
 import '../user/screen4.dart';
 
 class Screen3 extends StatefulWidget {
-  const Screen3({Key? key}) : super(key: key);
-
   @override
   State<Screen3> createState() => _Screen3State();
 }
@@ -202,16 +200,27 @@ class _Screen3State extends State<Screen3> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => User_Home(
-                                          currentIndex: 3,
-                                          title: pd.song_name,
-                                          song_url: pd.song_url,
-                                          artist_email: pd.email,
-                                          owned_email: pd.owner,
-                                          logo_url: pd.img_url,
-                                          price: pd.price,
-                                        ),
-                                      ));
+                                          builder: (context) => Screen4(
+                                                artist_email: pd.email,
+                                                logo_url: pd.img_url,
+                                                owned_email: pd.owner,
+                                                price: pd.price,
+                                                song_url: pd.song_url,
+                                                title: pd.song_name,
+                                              )));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => User_Home(
+                                  //         currentIndex: 3,
+                                  //         title: pd.song_name,
+                                  //         song_url: pd.song_url,
+                                  //         artist_email: pd.email,
+                                  //         owned_email: pd.owner,
+                                  //         logo_url: pd.img_url,
+                                  //         price: pd.price,
+                                  //       ),
+                                  //     ));
                                 },
                                 child: Text('\nBUY\n\nEth ${pd.price}\n'),
                               ),

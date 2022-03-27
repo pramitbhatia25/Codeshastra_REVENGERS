@@ -128,153 +128,161 @@ class _Screen3State extends State<Screen3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.purple,
           title: Text('Creator Studio',
               style: TextStyle(fontSize: 23, letterSpacing: 1.5))),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.purple[800]!,
-                Colors.purple[200]!,
-              ]),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 10.0,
+      body: SingleChildScrollView(
+        child: Container(
+          height: 600,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.purple[800]!,
+                  Colors.purple[200]!,
+                ]),
           ),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                //Let's add some text title
-                Center(
-                  child: Container(
-                    width: 250,
-                    child: TextField(
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 15, letterSpacing: 2),
-                      textAlign: TextAlign.center,
-                      controller: songName,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
-                          ),
-                          fillColor: Colors.transparent,
-                          hintText: 'Enter Song Name',
-                          hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              letterSpacing: 2)),
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 10.0,
+            ),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20),
+                  //Let's add some text title
+                  Center(
+                    child: Container(
+                      width: 250,
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            letterSpacing: 2),
+                        textAlign: TextAlign.center,
+                        controller: songName,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Song Name',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                letterSpacing: 2)),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-                Center(
-                  child: Container(
-                    width: 250,
-                    child: TextField(
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 15, letterSpacing: 2),
-                      textAlign: TextAlign.center,
-                      onChanged: (value) {
-                        setState(() {
-                          genre[0] = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
-                          ),
-                          fillColor: Colors.transparent,
-                          hintText: 'Enter Genre 1',
-                          hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              letterSpacing: 2)),
+                  SizedBox(height: 20),
+                  Center(
+                    child: Container(
+                      width: 250,
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            letterSpacing: 2),
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          setState(() {
+                            genre[0] = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Genre 1',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                letterSpacing: 2)),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Center(
-                  child: Container(
-                    width: 250,
-                    child: TextField(
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 15, letterSpacing: 2),
-                      textAlign: TextAlign.center,
-                      onChanged: (value) {
-                        setState(() {
-                          genre[1] = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
-                          ),
-                          fillColor: Colors.transparent,
-                          hintText: 'Enter Genre 2',
-                          hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              letterSpacing: 2)),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Center(
+                    child: Container(
+                      width: 250,
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            letterSpacing: 2),
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          setState(() {
+                            genre[1] = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Genre 2',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                letterSpacing: 2)),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    width: 250,
-                    child: TextField(
-                      style: TextStyle(
-                          color: Colors.white, fontSize: 15, letterSpacing: 2),
-                      textAlign: TextAlign.center,
-                      onChanged: (value) {
-                        setState(() {
-                          genre[2] = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: const BorderSide(
-                                color: Colors.black, width: 2.0),
-                          ),
-                          fillColor: Colors.transparent,
-                          hintText: 'Enter Genre 3',
-                          hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              letterSpacing: 2)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: Container(
+                      width: 250,
+                      child: TextField(
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            letterSpacing: 2),
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          setState(() {
+                            genre[2] = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Genre 3',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                letterSpacing: 2)),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10.0),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  SizedBox(height: 10.0),
+                  Row(
                     children: [
                       Checkbox(
                         value: songcheck,
@@ -286,7 +294,7 @@ class _Screen3State extends State<Screen3> {
                         activeColor: Colors.white,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 0.0),
                         child: ElevatedButton.icon(
                           label: Text('Choose MP3 File To Upload',
                               style: TextStyle(fontSize: 15)),
@@ -319,37 +327,35 @@ class _Screen3State extends State<Screen3> {
                       ),
                     ],
                   ),
-                ),
-                Center(
-                    child: Text(
-                  fileUploaded.text,
-                  style: TextStyle(color: Colors.white),
-                )
-                    // child: TextField(
-                    //   style: TextStyle(
-                    //       color: Colors.white, fontSize: 15, letterSpacing: 2),
-                    //   enabled: false,
-                    //   textAlign: TextAlign.center,
-                    //   controller: fileUploaded,
-                    //   decoration: InputDecoration(
-                    //       border: InputBorder.none,
-                    //       enabledBorder: OutlineInputBorder(
-                    //         borderSide: const BorderSide(
-                    //             color: Colors.transparent, width: 2.0),
-                    //       ),
-                    //       fillColor: Colors.transparent,
-                    //       hintText: 'No MP3 file Selected',
-                    //       hintStyle: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 15,
-                    //           letterSpacing: 2)),
-                    // ),
-                    ),
-                Center(
-                  child: Row(
+                  Center(
+                      child: Text(
+                    fileUploaded.text,
+                    style: TextStyle(color: Colors.white),
+                  )
+                      // child: TextField(
+                      //   style: TextStyle(
+                      //       color: Colors.white, fontSize: 15, letterSpacing: 2),
+                      //   enabled: false,
+                      //   textAlign: TextAlign.center,
+                      //   controller: fileUploaded,
+                      //   decoration: InputDecoration(
+                      //       border: InputBorder.none,
+                      //       enabledBorder: OutlineInputBorder(
+                      //         borderSide: const BorderSide(
+                      //             color: Colors.transparent, width: 2.0),
+                      //       ),
+                      //       fillColor: Colors.transparent,
+                      //       hintText: 'No MP3 file Selected',
+                      //       hintStyle: TextStyle(
+                      //           color: Colors.white,
+                      //           fontSize: 15,
+                      //           letterSpacing: 2)),
+                      // ),
+                      ),
+                  Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(top: 0),
                         child: Checkbox(
                           value: imaageCheck,
                           onChanged: (value) {},
@@ -361,7 +367,7 @@ class _Screen3State extends State<Screen3> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(right: 0.0),
                         child: ElevatedButton.icon(
                           label: Text('Choose Background Image To Upload',
                               style: TextStyle(fontSize: 15)),
@@ -378,45 +384,45 @@ class _Screen3State extends State<Screen3> {
                       ),
                     ],
                   ),
-                ),
-                Center(
-                  child: TextField(
-                    style: TextStyle(
-                        color: Colors.white, fontSize: 15, letterSpacing: 2),
-                    enabled: false,
-                    textAlign: TextAlign.center,
-                    controller: bgImage,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Colors.transparent, width: 2.0),
-                        ),
-                        fillColor: Colors.transparent,
-                        hintText: '$a',
-                        hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            letterSpacing: 2)),
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: ElevatedButton.icon(
-                      label: Text('Upload', style: TextStyle(fontSize: 15)),
-                      icon: Icon(Icons.upload),
-                      onPressed: () {
-                        finalupload(context);
-                        setState(() {
-                          // a = imagepath;
-                          // bgImage.text = imagepath;
-                        });
-                      },
+                  Center(
+                    child: TextField(
+                      style: TextStyle(
+                          color: Colors.white, fontSize: 15, letterSpacing: 2),
+                      enabled: false,
+                      textAlign: TextAlign.center,
+                      controller: bgImage,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.transparent, width: 2.0),
+                          ),
+                          fillColor: Colors.transparent,
+                          hintText: '$a',
+                          hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              letterSpacing: 2)),
                     ),
                   ),
-                ),
-              ],
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: ElevatedButton.icon(
+                        label: Text('Upload', style: TextStyle(fontSize: 15)),
+                        icon: Icon(Icons.upload),
+                        onPressed: () {
+                          finalupload(context);
+                          setState(() {
+                            // a = imagepath;
+                            // bgImage.text = imagepath;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

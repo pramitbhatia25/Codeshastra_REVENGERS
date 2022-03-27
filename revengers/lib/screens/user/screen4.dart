@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:revengers/widgets/appBar.dart';
+
+import '../../widgets/song.dart';
 
 class Screen4 extends StatefulWidget {
   String title = "Default";
@@ -24,6 +28,28 @@ class Screen4 extends StatefulWidget {
 
 class _Screen4State extends State<Screen4> {
   TextEditingController walletId = TextEditingController();
+  final _cloudfirestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  User? loggedInUser;
+
+  Future<void> buy() async {
+    // var snapshots = _cloudfirestore.collection('songs').snapshots();
+
+    // await snapshots.forEach((document) async {
+    //   document.reference.updateData(<String, dynamic>{
+    //     'owner': loggedInUser?.email.toString(),
+    //   });
+    // });
+
+    await for (var snapshot
+        in _cloudfirestore.collection('songs').snapshots()) {
+      for (var message in snapshot.docs) {
+        if (message.data()['song_name'] == widget.title.toString()) {
+          message.data()['owner'] = loggedInUser?.email.toString();
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +154,9 @@ class _Screen4State extends State<Screen4> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await buy();
+                      },
                       child: Text('\nBUY\n\nEth ${widget.price}\n'),
                     ),
                   ],
