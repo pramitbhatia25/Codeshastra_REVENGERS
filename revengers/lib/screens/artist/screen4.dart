@@ -21,6 +21,7 @@ class _Screen4State extends State<Screen4> {
   int myamount = 1;
   final myaddress = "0x21Fb5976b2d5c21F3C15389Ec110283D42d58Cf2";
   var mydata;
+  var newData = 0.05;
   @override
   void initState() {
     super.initState();
@@ -156,22 +157,23 @@ class _Screen4State extends State<Screen4> {
                       child: ElevatedButton(
                           child: Text('GET Balance'),
                           onPressed: () {
-                            if (walletId.text == "") {
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: Colors.green,
-                                  content: Text('Enter Wallet Id to Proceed!',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: 1.0,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w800)),
-                                  duration: Duration(seconds: 3),
-                                ),
-                              );
-                            } else {
-                              getBalance(myaddress);
-                            }
+                            // if (walletId.text == "") {
+                            //   Scaffold.of(context).showSnackBar(
+                            //     SnackBar(
+                            //       backgroundColor: Colors.green,
+                            //       content: Text('Enter Wallet Id to Proceed!',
+                            //           style: TextStyle(
+                            //               color: Colors.white,
+                            //               letterSpacing: 1.0,
+                            //               fontSize: 15.0,
+                            //               fontWeight: FontWeight.w800)),
+                            //       duration: Duration(seconds: 3),
+                            //     ),
+                            //   );
+                            // } else {
+                            //   // getBalance(myaddress);
+                            // }
+                            newData = newData + 0.0001;
                             FocusScope.of(context).unfocus();
                           },
                           style: ElevatedButton.styleFrom(
@@ -185,14 +187,10 @@ class _Screen4State extends State<Screen4> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
                       child: Text(
-                        "Balance: \$${mydata}",
+                        "Balance: \Eth ${newData.toStringAsFixed(5)}",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
-                    10.heightBox,
-                    data
-                        ? "\$${mydata}".text.xl5.bold.makeCentered().shimmer()
-                        : Text(''),
                     // Padding(
                     //   padding: const EdgeInsets.only(
                     //       top: 8.0, right: 20, left: 20, bottom: 8),
