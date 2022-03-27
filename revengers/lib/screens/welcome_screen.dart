@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:revengers/screens/artist/artist_login.dart';
 import 'package:revengers/screens/user/user_login.dart';
 import 'package:revengers/widgets/roundbutton.dart';
+import 'package:lottie/lottie.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -36,7 +37,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           child: Column(
             children: [
-              SizedBox(height: 150),
+              SizedBox(
+                height: 150,
+              ),
               const Text('Revengers',
                   style: TextStyle(
                     color: Colors.black,
@@ -49,8 +52,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               //   child: Lottie.asset('../assets/lottie/continuePage.json',
               //       height: 150),
               // ),
+<<<<<<< HEAD
               Lottie.asset("assets/lottie/artistPage.json", height: 200),
               SizedBox(height: 40),
+=======
+              Lottie.asset('assets/lottie/artistPage.json',
+                  height: 200.0), //lottie
+>>>>>>> 5a93759f18347b3cc2aa8a18c9547b8e9a0cd7be
               Expanded(
                 child: Container(
                   height: 100,
