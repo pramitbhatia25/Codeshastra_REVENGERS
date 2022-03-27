@@ -90,135 +90,153 @@ class _Screen4State extends State<Screen4> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.green,
           title: Text('Wallet',
               style: TextStyle(fontSize: 23, letterSpacing: 1.5))),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.green[800]!,
-                Colors.green[200]!,
-              ]),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 10.0,
+      body: SingleChildScrollView(
+        child: Container(
+          height: 800,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.green[800]!,
+                  Colors.green[200]!,
+                ]),
           ),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //Let's add some text title
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0, top: 20),
-                  child: Text(
-                    "Your Earnings",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 38.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 8.0, right: 20, left: 20, bottom: 8),
-                  child: TextField(
-                    controller: walletId,
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
-                        ),
-                        fillColor: Colors.transparent,
-                        hintText: 'Enter Wallet Id',
-                        hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            letterSpacing: 2)),
-                  ),
-                ),
-                Center(
-                  child: ElevatedButton(
-                      child: Text('GET Balance'),
-                      onPressed: () {
-                        if (walletId.text == "") {
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.green,
-                              content: Text('Enter Wallet Id to Proceed!',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      letterSpacing: 1.0,
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w800)),
-                              duration: Duration(seconds: 3),
-                            ),
-                          );
-                        } else {
-                          getBalance(myaddress);
-                        }
-                        FocusScope.of(context).unfocus();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        primary: Colors.transparent,
-                      )),
-                ),
-                Center(
-                    child: "Balance".text.gray400.xl2.semiBold.makeCentered()),
-                10.heightBox,
-                data
-                    ? "\$${mydata}".text.xl5.bold.makeCentered().shimmer()
-                    : CircularProgressIndicator().centered(),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: TextField(
-                      keyboardType: TextInputType.number,
-                      controller: val,
-                      onChanged: (value) {
-                        setState(() {
-                          var a = val.text, myamount = int.parse(a) * 100;
-                        });
-                      },
-                      decoration:
-                          InputDecoration(border: OutlineInputBorder())),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          child: Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 10.0,
+              ),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextButton.icon(
-                      onPressed: () => sendCoin(),
-                      label: 'Deposit'.text.black.make(),
-                      icon: Icon(
-                        Icons.refresh,
-                        color: Colors.black,
+                    //Let's add some text title
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0, top: 20),
+                      child: Text(
+                        "Your Earnings",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 38.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () => getBalance(myaddress),
-                      label: 'Refresh'.text.black.make(),
-                      icon: Icon(
-                        Icons.call_made_outlined,
-                        color: Colors.black,
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, right: 20, left: 20, bottom: 8),
+                      child: TextField(
+                        controller: walletId,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Wallet Id',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                letterSpacing: 2)),
                       ),
                     ),
+                    SizedBox(height: 10),
+                    Center(
+                      child: ElevatedButton(
+                          child: Text('GET Balance'),
+                          onPressed: () {
+                            if (walletId.text == "") {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Enter Wallet Id to Proceed!',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          letterSpacing: 1.0,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w800)),
+                                  duration: Duration(seconds: 3),
+                                ),
+                              );
+                            } else {
+                              getBalance(myaddress);
+                            }
+                            FocusScope.of(context).unfocus();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            primary: Colors.transparent,
+                          )),
+                    ),
+                    Center(
+                        child:
+                            "Balance".text.gray400.xl2.semiBold.makeCentered()),
+                    10.heightBox,
+                    data
+                        ? "\$${mydata}".text.xl5.bold.makeCentered().shimmer()
+                        : CircularProgressIndicator().centered(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, right: 20, left: 20, bottom: 8),
+                      child: TextField(
+                        controller: val,
+                        onChanged: (value) {
+                          setState(() {
+                            var a = val.text, myamount = int.parse(a) * 100;
+                          });
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 2.0),
+                            ),
+                            fillColor: Colors.transparent,
+                            hintText: 'Enter Amount To Deposit',
+                            hintStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                letterSpacing: 2)),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton.icon(
+                          onPressed: () => sendCoin(),
+                          label: 'Deposit'.text.black.make(),
+                          icon: Icon(
+                            Icons.refresh,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () => getBalance(myaddress),
+                          label: 'Refresh'.text.black.make(),
+                          icon: Icon(
+                            Icons.call_made_outlined,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
           ),
         ),

@@ -48,6 +48,7 @@ dependencies:
   velocity_x: ^3.4.0
   http: ^0.13.4
   web3dart: ^2.0.0-dev.7
+  lottie: ^1.2.2
 
 dev_dependencies:
   flutter_test:

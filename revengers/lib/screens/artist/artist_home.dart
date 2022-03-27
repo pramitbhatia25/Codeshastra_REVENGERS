@@ -11,10 +11,12 @@ class Artist_Home extends StatefulWidget {
   String song_url = "Default";
   String artist_email = "Default";
   String owned_email = "Default";
+  String price = "Default";
 
   Artist_Home({
     required this.title,
     required this.logo_url,
+    required this.price,
     required this.song_url,
     required this.artist_email,
     required this.owned_email,

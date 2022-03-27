@@ -40,6 +40,7 @@ class _Screen2State extends State<Screen2> {
         in _cloudfirestore.collection('songs').snapshots()) {
       for (var message in snapshot.docs) {
         songs.add(Song(
+          price: message.data()['price'].toString(),
           email: message.data()['email'].toString(),
           owner: message.data()['owner'].toString(),
           song_name: message.data()['song_name'].toString(),
@@ -75,6 +76,7 @@ class _Screen2State extends State<Screen2> {
             owner: message.data()['owner'].toString(),
             song_name: message.data()['song_name'].toString(),
             song_url: message.data()['song_url'].toString(),
+            price: message.data()['price'].toString(),
             img_url: message.data()['img'].toString(),
           ));
         }
@@ -140,11 +142,13 @@ class _Screen2State extends State<Screen2> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => User_Home(
+                                    currentIndex: 1,
                                     title: pd.song_name,
                                     song_url: pd.song_url,
                                     artist_email: pd.email,
                                     owned_email: pd.owner,
                                     logo_url: pd.img_url,
+                                    price: pd.price,
                                   ),
                                 ));
                           },
@@ -197,12 +201,13 @@ class _Screen2State extends State<Screen2> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => User_Home(
-                                    title: pd.song_name,
-                                    song_url: pd.song_url,
-                                    artist_email: pd.email,
-                                    owned_email: pd.owner,
-                                    logo_url: pd.img_url,
-                                  ),
+                                      currentIndex: 1,
+                                      title: pd.song_name,
+                                      song_url: pd.song_url,
+                                      artist_email: pd.email,
+                                      owned_email: pd.owner,
+                                      logo_url: pd.img_url,
+                                      price: pd.price),
                                 ));
                           },
                           child: Column(

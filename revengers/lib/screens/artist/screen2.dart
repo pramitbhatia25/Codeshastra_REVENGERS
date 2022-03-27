@@ -56,6 +56,7 @@ class _Screen2State extends State<Screen2> {
             loggedInUser!.email.toString()) {
           songs.add(Song(
             email: message.data()['email'].toString(),
+            price: message.data()['price'].toString(),
             owner: message.data()['owner'].toString(),
             song_name: message.data()['song_name'].toString(),
             song_url: message.data()['song_url'].toString(),
@@ -90,6 +91,7 @@ class _Screen2State extends State<Screen2> {
             email: message.data()['email'].toString(),
             owner: message.data()['owner'].toString(),
             song_name: message.data()['song_name'].toString(),
+            price: message.data()['price'].toString(),
             song_url: message.data()['song_url'].toString(),
             img_url: message.data()['img'].toString(),
           ));
@@ -124,6 +126,7 @@ class _Screen2State extends State<Screen2> {
             song_name: message.data()['song_name'].toString(),
             song_url: message.data()['song_url'].toString(),
             img_url: message.data()['img'].toString(),
+            price: message.data()['price'].toString(),
           ));
         }
 
@@ -194,6 +197,7 @@ class _Screen2State extends State<Screen2> {
                                       artist_email: pd.email,
                                       owned_email: pd.owner,
                                       logo_url: pd.img_url,
+                                      price: pd.price,
                                     ),
                                   ));
                             },
@@ -252,6 +256,7 @@ class _Screen2State extends State<Screen2> {
                                       artist_email: pd.email,
                                       owned_email: pd.owner,
                                       logo_url: pd.img_url,
+                                      price: pd.price,
                                     ),
                                   ));
                             },
@@ -310,6 +315,7 @@ class _Screen2State extends State<Screen2> {
                                       artist_email: pd.email,
                                       owned_email: pd.owner,
                                       logo_url: pd.img_url,
+                                      price: pd.price,
                                     ),
                                   ));
                             },

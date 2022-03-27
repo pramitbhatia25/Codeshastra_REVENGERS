@@ -2,7 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:revengers/widgets/appBar.dart';
 
 class Screen4 extends StatefulWidget {
-  const Screen4({Key? key}) : super(key: key);
+  String title = "Default";
+  String logo_url = "Default";
+  String song_url = "Default";
+  String artist_email = "Default";
+  String owned_email = "Default";
+  String price = "Default";
+
+  Screen4({
+    required this.title,
+    required this.logo_url,
+    required this.song_url,
+    required this.artist_email,
+    required this.owned_email,
+    required this.price,
+  });
 
   @override
   State<Screen4> createState() => _Screen4State();
@@ -85,6 +99,39 @@ class _Screen4State extends State<Screen4> {
                         ),
                         primary: Colors.transparent,
                       )),
+                ),
+                SizedBox(height: 100),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                            height: 150,
+                            width: 150,
+                            margin:
+                                EdgeInsets.only(top: 10, left: 20, right: 20),
+                            padding: EdgeInsets.only(left: 10, right: 10),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(widget.logo_url)),
+                              border:
+                                  Border.all(color: Colors.black, width: 1.0),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(child: Text(''))),
+                        SizedBox(height: 10),
+                        Text(widget.title),
+                      ],
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                      ),
+                      onPressed: () {},
+                      child: Text('\nBUY\n\nEth ${widget.price}\n'),
+                    ),
+                  ],
                 ),
               ],
             ),

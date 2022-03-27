@@ -13,6 +13,8 @@ class User_Home extends StatefulWidget {
   String song_url = "Default";
   String artist_email = "Default";
   String owned_email = "Default";
+  String price = "Default";
+  int currentIndex = 0;
 
   User_Home({
     required this.title,
@@ -20,6 +22,8 @@ class User_Home extends StatefulWidget {
     required this.song_url,
     required this.artist_email,
     required this.owned_email,
+    required this.price,
+    required this.currentIndex,
   });
   static const routeName = '/user_home';
   @override
@@ -28,7 +32,6 @@ class User_Home extends StatefulWidget {
 
 class _User_HomeState extends State<User_Home> {
   PageController _pageController = PageController();
-  int _currentIndex = 0;
   bool playing = false; // at the begining we are not playing any song
   IconData playBtn = Icons.play_arrow; // the main state of the play button icon
 
@@ -68,6 +71,7 @@ class _User_HomeState extends State<User_Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _player = AudioPlayer();
     // cache = AudioCache(fixedPlayer: _player);
 
@@ -117,9 +121,9 @@ class _User_HomeState extends State<User_Home> {
                 ),
                 title: Text('Wallet', style: TextStyle(color: Colors.green))),
           ],
-          selectedIndex: _currentIndex,
+          selectedIndex: widget.currentIndex,
           onItemSelected: (index) {
-            setState(() => _currentIndex = index);
+            setState(() => widget.currentIndex = index);
             _pageController.jumpToPage(index);
           },
         ),
@@ -128,7 +132,8 @@ class _User_HomeState extends State<User_Home> {
             controller: _pageController,
             onPageChanged: (index) {
               setState(() {
-                _currentIndex = index;
+                widget.currentIndex = index;
+                _pageController.jumpToPage(widget.currentIndex);
               });
             },
             children: [
@@ -308,7 +313,14 @@ class _User_HomeState extends State<User_Home> {
                 ),
               ),
               Screen3(),
-              Screen4(),
+              Screen4(
+                artist_email: widget.artist_email,
+                logo_url: widget.logo_url,
+                owned_email: widget.owned_email,
+                price: widget.price,
+                song_url: widget.song_url,
+                title: widget.title,
+              ),
             ],
           ),
         ),
