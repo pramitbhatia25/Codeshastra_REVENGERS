@@ -40,7 +40,7 @@ class _User_LoginState extends State<User_Login> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 150),
-              const Text('Revengers',
+              const Text('muse-FT',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 40,

@@ -40,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               SizedBox(
                 height: 150,
               ),
-              const Text('Revengers',
+              const Text('muse-FT',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 60,
