@@ -132,6 +132,7 @@ class _Screen3State extends State<Screen3> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+          elevation: 0,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.purple,
           title: Text('Creator Studio',

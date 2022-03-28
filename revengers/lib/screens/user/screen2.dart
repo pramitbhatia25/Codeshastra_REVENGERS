@@ -92,6 +92,7 @@ class _Screen2State extends State<Screen2> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+          elevation: 0,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.orange,
           leading: IconButton(
@@ -142,6 +143,7 @@ class _Screen2State extends State<Screen2> {
                     child: Container(
                       height: 200,
                       child: ListView(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         children: owner_songs.map((pd) {
                           return GestureDetector(
@@ -202,6 +204,7 @@ class _Screen2State extends State<Screen2> {
                     child: Container(
                       height: 200,
                       child: ListView(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         children: songs.map((pd) {
                           return GestureDetector(

@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revengers/screens/artist/artist_home.dart';
 import 'package:revengers/screens/artist/artist_login.dart';
 import 'package:revengers/screens/artist/artist_register.dart';
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context)
+              .textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+        ),
         primarySwatch: Colors.purple,
       ),
       home: WelcomeScreen(),

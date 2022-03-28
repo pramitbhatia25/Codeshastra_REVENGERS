@@ -136,6 +136,7 @@ class _Artist_HomeState extends State<Artist_Home> {
               Scaffold(
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
+                    elevation: 0,
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.lightBlue,
                     title: Text('Currently Playing',

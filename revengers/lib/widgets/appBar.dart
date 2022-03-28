@@ -8,9 +8,10 @@ class myAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       // automaticallyImplyLeading: false,
       backgroundColor: Colors.red[400],
-      elevation: 0,
+      // elevation: 0,
       title: Text("$title",
           style: TextStyle(fontSize: 23, letterSpacing: 2, fontFamily: 'Lato')),
     );

@@ -1,3 +1,4 @@
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:revengers/screens/user/screen2.dart';
@@ -90,7 +91,7 @@ class _User_HomeState extends State<User_Home> {
           items: [
             BottomNavyBarItem(
               icon: Icon(
-                Icons.home,
+                FeatherIcons.home,
                 color: Colors.orange,
               ),
               title: Text(
@@ -100,14 +101,14 @@ class _User_HomeState extends State<User_Home> {
             ),
             BottomNavyBarItem(
               icon: Icon(
-                Icons.play_arrow,
+                FeatherIcons.playCircle,
                 color: Colors.blue,
               ),
               title: Text('Playing'),
             ),
             BottomNavyBarItem(
                 icon: Icon(
-                  Icons.search,
+                  FeatherIcons.search,
                   color: Colors.purple,
                 ),
                 title: Text(
@@ -116,7 +117,7 @@ class _User_HomeState extends State<User_Home> {
                 )),
             BottomNavyBarItem(
                 icon: Icon(
-                  Icons.money,
+                  FeatherIcons.dollarSign,
                   color: Colors.green,
                 ),
                 title: Text('Wallet', style: TextStyle(color: Colors.green))),
@@ -141,6 +142,7 @@ class _User_HomeState extends State<User_Home> {
               Scaffold(
                 resizeToAvoidBottomInset: true,
                 appBar: AppBar(
+                    elevation: 0,
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.lightBlue,
                     title: Text('Currently Playing',

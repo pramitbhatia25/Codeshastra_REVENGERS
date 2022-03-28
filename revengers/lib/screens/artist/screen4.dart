@@ -93,6 +93,7 @@ class _Screen4State extends State<Screen4> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+          elevation: 0,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.green,
           title: Text('Wallet',

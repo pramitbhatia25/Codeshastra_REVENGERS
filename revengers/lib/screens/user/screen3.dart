@@ -71,6 +71,7 @@ class _Screen3State extends State<Screen3> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+          elevation: 0,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.purple,
           title: Text('Search',
@@ -147,12 +148,13 @@ class _Screen3State extends State<Screen3> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: Container(
-                    height: 450,
+                    height: 550,
                     child: ListView(
+                      physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       children: songs.map((pd) {
                         return GestureDetector(
@@ -177,12 +179,12 @@ class _Screen3State extends State<Screen3> {
                               Column(
                                 children: [
                                   Container(
-                                      width: 150,
-                                      height: 150,
+                                      width: 170,
+                                      height: 170,
                                       margin: EdgeInsets.only(
-                                          top: 10, left: 20, right: 20),
-                                      padding:
-                                          EdgeInsets.only(left: 10, right: 10),
+                                          top: 30, left: 20, right: 20),
+                                      padding: EdgeInsets.only(
+                                          left: 10, right: 10, top: 20),
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                             image: NetworkImage(pd.img_url)),
@@ -191,8 +193,13 @@ class _Screen3State extends State<Screen3> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Center(child: Text(''))),
-                                  SizedBox(height: 10),
-                                  Text(pd.song_name),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      pd.song_name,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
                                 ],
                               ),
                               ElevatedButton(
@@ -231,6 +238,7 @@ class _Screen3State extends State<Screen3> {
                     ),
                   ),
                 ),
+                SizedBox(height: 10),
               ],
             ),
           ),
